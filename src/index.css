@@ -1,0 +1,3300 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: Montserrat, sans-serif;
+  color: #173f3a;
+  background: #c8a97e;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #b89669;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: radial-gradient(circle at 50% 20%, #ead9b7, #b68c5e 68%, #8b663f);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.invitation-shell {
+  position: relative;
+  width: 100%;
+  max-width: 414px;
+  margin: 12px auto;
+  box-shadow: 0 10px 45px rgba(35, 20, 12, 0.45);
+  background: #eee0c3;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.scene {
+  position: relative;
+  height: 100svh;
+  min-height: 100svh;
+  max-height: 844px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid #29170f88;
+  pointer-events: none;
+  z-index: 20;
+  box-shadow: inset 0 0 6px #3d231655;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0) rotate(var(--rotation, 0deg));
+}
+
+.chapter-nav {
+  position: fixed;
+  right: max(calc((100vw - 414px)/2 + 8px), 6px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chapter-nav button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f4e6c7a6;
+  box-shadow: 0 0 0 1px #173f3a;
+  transition: .3s;
+  position: relative;
+}
+
+.chapter-nav button.active {
+  background: #d27a39;
+  transform: scale(1.4);
+}
+
+.chapter-nav span {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  opacity: 0;
+  transform: translate(5px, -50%);
+  pointer-events: none;
+  background: #153f39;
+  color: #fff4da;
+  padding: 3px 6px;
+  font-size: 7.5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  transition: .2s;
+}
+
+.chapter-nav button:hover span {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.section-title {
+  text-align: center;
+  padding-top: clamp(30px, 5.5vh, 48px);
+  position: relative;
+  z-index: 3;
+}
+
+.section-title h2 {
+  font-size: clamp(32px, 8.5vw, 44px);
+  line-height: .92;
+  font-style: italic;
+}
+
+.section-title p {
+  margin-top: 6px;
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-weight: 600;
+}
+
+.section-title.cream {
+  color: #fff3d4;
+  text-shadow: 0 2px 5px #0a2f29;
+}
+
+.section-title.ink {
+  color: #201510;
+}
+
+/* Scroll lock during video playback */
+html.video-scroll-locked,
+body.video-scroll-locked {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+}
+
+body.video-scroll-locked .chapter-nav button:not(:first-child) {
+  opacity: 0.25;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.hero {
+  position: relative;
+  background-image: none !important;
+  background-color: #000000;
+}
+
+.hero::before {
+  display: none;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Hero Papercraft Decorations Frame (Crystal Clear, Zero Blur/Haze) */
+.hero-decorations-wrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Top Clouds (Corner Framing with 100% Clear Center) */
+.hero-top-clouds-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(65px, 14vw, 92px);
+  pointer-events: none;
+  z-index: 11;
+}
+
+.hero-clouds-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* Top Header (3D Embossed Ohm & Couplet Typography) */
+.hero-top-header {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Sacred 3D Embossed Ohm Symbol */
+.hero-ohm-wrap {
+  width: clamp(38px, 9.5vw, 48px);
+  height: auto;
+  margin-bottom: 4px;
+  display: grid;
+  place-items: center;
+}
+
+.hero-ohm-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Top Title Typography (Razor-sharp vector rendering) */
+.hero-top-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5px;
+  text-align: center;
+}
+
+.hero-top-line {
+  font-family: 'Cinzel', 'Montserrat', 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(12px, 3.3vw, 14.5px);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  color: #1f140e;
+  text-transform: uppercase;
+  line-height: 1.34;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7), 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Bottom Flowers (Corner Framing with 100% Clear Center) */
+.hero-bottom-flowers-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(130px, 24vh, 170px);
+  pointer-events: none;
+  z-index: 11;
+}
+
+.hero-flowers-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.hero-copy {
+  position: absolute;
+  z-index: 10;
+  top: 5.5%;
+  width: 100%;
+  text-align: center;
+  color: #fff3d8;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+
+.om {
+  font-family: "Cormorant Garamond";
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .35em;
+  color: #f2cb8b;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px rgba(242, 203, 139, 0.5);
+}
+
+.eyebrow,
+.hero-line {
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: 8px;
+  font-weight: 600;
+  color: #eed2a4;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+}
+
+.hero-copy h1 {
+  margin: 4px 0 4px;
+  font-size: clamp(38px, 10.5vw, 50px);
+  line-height: .74;
+  font-style: italic;
+  color: #fffdf5;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85), 0 0 2px #d4a96a;
+}
+
+.hero-copy h1 i {
+  font-size: .52em;
+  color: #e59c5d;
+}
+
+/* ============================================================
+   HERO PAGE "TAP TO OPEN" PROMPT WITH BLUR BACKGROUND
+   ============================================================ */
+.hero-tap-to-open {
+  position: absolute;
+  bottom: clamp(32px, 6.5vh, 56px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  background: rgba(18, 14, 10, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(229, 195, 140, 0.65);
+  box-shadow: 
+    0 10px 32px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    0 0 22px rgba(212, 168, 83, 0.25);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s, opacity 0.3s ease;
+  animation: heroTapPulse 2.4s ease-in-out infinite;
+}
+
+.hero-tap-to-open:hover {
+  transform: translateX(-50%) scale(1.05);
+  background: rgba(28, 20, 14, 0.8);
+  border-color: rgba(247, 222, 175, 0.95);
+  box-shadow: 
+    0 14px 40px rgba(0, 0, 0, 0.75),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    0 0 30px rgba(212, 168, 83, 0.45);
+}
+
+.hero-tap-to-open:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+.hero-tap-to-open-text {
+  font-family: 'Cinzel', 'Montserrat', serif;
+  font-size: clamp(12px, 3vw, 14.5px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff6e5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 10px rgba(229, 195, 140, 0.6);
+  white-space: nowrap;
+}
+
+.hero-tap-to-open-icon {
+  width: 13px;
+  height: 13px;
+  color: #eed2a4;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(238, 210, 164, 0.7));
+  animation: tapIconBob 2.4s ease-in-out infinite;
+}
+
+@keyframes heroTapPulse {
+  0%, 100% {
+    box-shadow: 
+      0 10px 32px rgba(0, 0, 0, 0.65),
+      inset 0 1px 1px rgba(255, 255, 255, 0.25),
+      0 0 18px rgba(212, 168, 83, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 12px 36px rgba(0, 0, 0, 0.75),
+      inset 0 1px 1px rgba(255, 255, 255, 0.35),
+      0 0 28px rgba(212, 168, 83, 0.55);
+  }
+}
+
+@keyframes tapIconBob {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+/* Video In-Playback Controls */
+.hero-control-bar {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-ctrl-btn {
+  border: 1px solid rgba(229, 195, 140, 0.45);
+  background: rgba(22, 17, 13, 0.7);
+  color: #fff3d4;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s ease;
+  line-height: 1;
+}
+
+.hero-ctrl-btn:hover {
+  background: rgba(35, 27, 20, 0.95);
+  border-color: #ffd99f;
+  transform: scale(1.06);
+}
+
+.hero-skip-btn {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  padding: 8px 14px;
+}
+
+/* Progress bar at bottom of Hero scene */
+.hero-progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 30;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hero-progress-container.is-active {
+  opacity: 1;
+}
+
+.hero-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #c49651, #fae8c8, #e5b369);
+  box-shadow: 0 0 10px rgba(229, 179, 105, 0.8);
+  transition: width 0.15s linear;
+}
+
+/* Post-Video Ended Actions */
+.hero-ended-actions {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.hero-replay-btn {
+  border: 1px solid rgba(229, 195, 140, 0.6);
+  background: rgba(22, 17, 13, 0.8);
+  color: #f7e8ce;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hero-replay-btn:hover {
+  background: #9d6333;
+  border-color: #ffd99f;
+  transform: scale(1.05);
+  color: #fffdf7;
+}
+
+.hero-replay-btn span {
+  font-size: 13px;
+}
+
+.scroll-cue {
+  position: relative;
+  z-index: 25;
+  margin: 0 auto;
+  color: #fff1d6;
+  border: 0;
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 8px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.scroll-cue span {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  margin: 0 auto 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 16px;
+  animation: bob 1.8s ease-in-out infinite;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* HeroSection directly overlaid on DateSection, revealing DateSection in place (NO SCROLL) */
+.hero-date-stage {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  max-height: 844px;
+  overflow: hidden;
+}
+
+/* DateSection sits in the back of the hero page */
+.date-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.date-layer .scene {
+  width: 100%;
+  height: 100%;
+}
+
+/* Date Scene (Data Page) with Background Video */
+.date-scene {
+  position: relative;
+  background-image: none !important;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.date-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.date-video-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+      rgba(14, 10, 6, 0.35) 0%,
+      rgba(14, 10, 6, 0.08) 32%,
+      rgba(14, 10, 6, 0.14) 68%,
+      rgba(14, 10, 6, 0.45) 100%);
+  pointer-events: none;
+}
+
+.date-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* HeroSection sits in front, fading out smoothly when video ends */
+.hero-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), visibility 1s;
+  pointer-events: auto;
+}
+
+.hero-layer.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.hero-layer.is-faded-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hero-layer .scene {
+  width: 100%;
+  height: 100%;
+}
+
+.light-title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  color: #fff4dc;
+  padding-top: clamp(80px, 15vh, 120px);
+}
+
+/* "Together at the sacred Sangam" subtitle - clean without background black shadow */
+.light-title > p {
+  font-family: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(13px, 3.4vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fce8c3;
+  margin: 0;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.light-title > p::before,
+.light-title > p::after {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 232, 195, 0.85));
+}
+.light-title > p::after {
+  background: linear-gradient(90deg, rgba(252, 232, 195, 0.85), transparent);
+}
+
+/* "Kavya & Rohan" prominent main heading - clean without background black shadow */
+.light-title h2 {
+  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  font-size: clamp(48px, 13vw, 64px);
+  line-height: 1.05;
+  font-weight: 700;
+  font-style: italic;
+  color: #fffdf7;
+  letter-spacing: 0.02em;
+  margin: 4px 0 10px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+.light-title h2 i {
+  font-family: "Great Vibes", "Playfair Display", cursive, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.92em;
+  color: #f3d18e;
+  padding: 0 4px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.date-rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #eed5a1;
+  margin-top: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 0.9);
+}
+
+.date-rule span {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #eed5a1);
+}
+.date-rule span:last-child {
+  background: linear-gradient(90deg, #eed5a1, transparent);
+}
+
+.date-note {
+  position: absolute;
+  bottom: clamp(18px, 4.5vh, 32px);
+  width: 100%;
+  text-align: center;
+  color: #fff4dc;
+  text-transform: uppercase;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 4px rgba(0, 0, 0, 0.85);
+}
+
+.date-note small {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  text-transform: none;
+  font-size: 13px;
+  color: #f1dcab;
+}
+
+.story-scene {
+  background-size: cover;
+  background-position: center;
+}
+
+.story-scene .section-title.cream {
+  padding-top: clamp(28px, 5.5vh, 46px);
+  position: relative;
+  z-index: 4;
+}
+
+.story-scene .section-title.cream h2 {
+  font-family: "Cinzel Decorative", "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(34px, 8.5vw, 44px);
+  color: #fff4dc;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75), 0 0 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.story-scene .section-title.cream p {
+  color: #eed5a1;
+  letter-spacing: 0.18em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.story-beats {
+  position: absolute;
+  inset: 16% 5% 4%;
+  z-index: 2;
+}
+
+.beat {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff4dc;
+  cursor: pointer;
+}
+
+.beat img {
+  width: 86px;
+  height: 104px;
+  object-fit: cover;
+  border: 5px solid #fffdf5;
+  border-bottom-width: 18px;
+  border-radius: 2px;
+  box-shadow: 0 8px 20px rgba(4, 25, 20, 0.6), 0 2px 6px rgba(0, 0, 0, 0.25);
+  transform: rotate(var(--rotation));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.beat:hover img {
+  transform: scale(1.08) rotate(0deg);
+  box-shadow: 0 16px 36px rgba(4, 25, 20, 0.8), 0 4px 12px rgba(229, 195, 140, 0.4);
+}
+
+.beat p {
+  width: 96px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  line-height: 1.08;
+  color: #fff4dc;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+.beat b {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #fff6de;
+  letter-spacing: 0.02em;
+}
+
+.beat span {
+  display: block;
+  font-size: 12px;
+  margin-top: 3px;
+  font-style: italic;
+  color: #e5c38c;
+  letter-spacing: 0.02em;
+}
+
+.beat-one {
+  top: 3%;
+  left: 4%;
+  --rotation: -6deg;
+}
+
+.beat-two {
+  top: 36%;
+  right: 2%;
+  flex-direction: row-reverse;
+  text-align: right;
+  --rotation: 6deg;
+}
+
+.beat-three {
+  bottom: 3%;
+  left: 4%;
+  --rotation: -6deg;
+}
+
+/* ============================================================
+   THE COUPLE SCENE (Papercraft Mountains & Ornate Arch Frame)
+   ============================================================ */
+.couple-scene {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center top;
+}
+
+/* ============================================================
+   COUPLE SECTION TOP FLOATING PAPERCRAFT CLOUDS
+   ============================================================ */
+.couple-clouds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.couple-cloud {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.couple-cloud-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(105, 75, 45, 0.22));
+}
+
+.couple-cloud-left {
+  top: clamp(6px, 1.8vh, 22px);
+  left: clamp(-15px, -2vw, 4px);
+  width: clamp(120px, 32vw, 160px);
+  animation: coupleCloudFloatLeft 7.5s ease-in-out infinite;
+}
+
+.couple-cloud-right {
+  top: clamp(10px, 2.4vh, 28px);
+  right: clamp(-12px, -1.8vw, 6px);
+  width: clamp(105px, 28vw, 145px);
+  animation: coupleCloudFloatRight 8.8s ease-in-out infinite;
+}
+
+@keyframes coupleCloudFloatLeft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12px, -6px, 0) scale(1.025);
+  }
+}
+
+@keyframes coupleCloudFloatRight {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-10px, 5px, 0) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .couple-cloud-left,
+  .couple-cloud-right {
+    animation: none;
+  }
+}
+
+/* Header container at top in parchment sky */
+.couple-header {
+  text-align: center;
+  padding-top: clamp(24px, 4.5vh, 38px);
+  padding-bottom: 6px;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Soft luminous halo behind header for crystal-clear readability against paper texture */
+.couple-header::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(340px, 90%);
+  height: 90%;
+  background: radial-gradient(ellipse at center, rgba(255, 252, 246, 0.78) 0%, rgba(255, 250, 240, 0.42) 60%, transparent 80%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(10px);
+}
+
+/* Classical Roman letterspaced eyebrow */
+.couple-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Cinzel', 'Montserrat', serif;
+  font-size: clamp(11.5px, 2.7vw, 13.5px);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  color: #3b1908;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.98), 0 0 12px rgba(255, 250, 242, 0.9);
+}
+
+.couple-eyebrow::before,
+.couple-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: clamp(16px, 4vw, 26px);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #b8863b, transparent);
+  opacity: 0.85;
+}
+
+/* Grand majestic couple names */
+.couple-names {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(34px, 8.8vw, 46px);
+  line-height: 1.12;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  color: #0b221c;
+  margin: 0;
+  text-wrap: balance;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 14px rgba(255, 252, 245, 0.95),
+    0 0 1px rgba(0, 0, 0, 0.22);
+}
+
+/* Shimmering metallic gold ampersand */
+.couple-amp {
+  font-style: italic;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  color: #8c5715;
+  margin: 0 6px;
+  display: inline-block;
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.95),
+    0 0 10px rgba(212, 168, 83, 0.5);
+}
+
+/* Poetic tagline */
+.couple-tagline {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(13px, 3.2vw, 15px);
+  font-style: italic;
+  color: #4a3629;
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+  margin-bottom: 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+}
+
+/* Couple Center Stage: Arch Frame & Vows directly below frame */
+.couple-center-stage {
+  position: relative;
+  margin-top: clamp(24px, 3.8vh, 38px);
+  margin-left: auto;
+  margin-right: auto;
+  width: clamp(235px, 64vw, 295px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.couple-frame-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: coupleFrameFloat 6.5s ease-in-out infinite;
+}
+
+.couple-arch-img {
+  width: 100%;
+  max-height: clamp(310px, 46vh, 380px);
+  object-fit: contain;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 32px rgba(10, 35, 30, 0.45));
+}
+
+@keyframes coupleFrameFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Bottom Botanical & Mountain Design according to background */
+.couple-bottom-decor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.couple-bottom-decor-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: center bottom;
+  filter: drop-shadow(0 -4px 12px rgba(9, 36, 31, 0.22));
+}
+
+/* Vows Pill positioned directly below frame */
+.couple-words {
+  position: relative;
+  margin-top: clamp(8px, 1.4vh, 14px);
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 16px;
+  background: rgba(14, 38, 33, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(220, 195, 145, 0.45);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  pointer-events: auto;
+  z-index: 6;
+}
+
+.couple-words p {
+  margin: 0;
+  color: #fcedcf;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 3.6vw, 16.5px);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+.couple-words span {
+  display: block;
+  margin-top: 2px;
+  color: #e5c38c;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 3.6vw, 16.5px);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+/* ============================================================
+   OUR CELEBRATIONS / EVENTS SCENE
+   ============================================================ */
+.events-scene {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Top Marigold (Genda) Garland Swag & Corner Flowers */
+.event-top-genda-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(85px, 22vw, 130px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.event-genda-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.22));
+}
+
+/* Section Header: Our Celebrations Title & Dynamic Counter */
+.event-header-title {
+  position: absolute;
+  top: clamp(14px, 3vh, 26px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 12;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.event-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(9.5px, 2.5vw, 11.5px);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #7d5920;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.event-main-title {
+  font-family: "Cinzel Decorative", "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(30px, 7.5vw, 42px);
+  color: #17110c;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 2px 10px rgba(212, 168, 83, 0.35);
+  margin: 0;
+}
+
+.event-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 3px 12px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(197, 160, 89, 0.55);
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(10px, 2.6vw, 12px);
+  color: #2a221b;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.badge-seq {
+  font-weight: 600;
+  color: #73531b;
+  letter-spacing: 0.05em;
+}
+
+.badge-divider {
+  color: #c5a059;
+}
+
+.badge-name {
+  font-weight: 700;
+  color: #87281f;
+  letter-spacing: 0.04em;
+}
+
+/* 10-Events Interactive Snap Carousel Shell */
+.events-carousel-shell {
+  position: absolute;
+  top: clamp(118px, 17vh, 142px);
+  bottom: clamp(90px, 14vh, 120px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carousel Prev/Next Circular Glass Navigation Buttons */
+.event-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(229, 195, 140, 0.7);
+  background: rgba(14, 38, 30, 0.72);
+  backdrop-filter: blur(8px);
+  color: #fcedd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.38);
+}
+
+.event-carousel-arrow:hover {
+  background: rgba(197, 160, 89, 0.95);
+  color: #17110c;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+}
+
+.event-carousel-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.event-carousel-prev {
+  left: clamp(8px, 2.5vw, 16px);
+}
+
+.event-carousel-next {
+  right: clamp(8px, 2.5vw, 16px);
+}
+
+/* Horizontal Scroll Snap Track */
+.events-scroll-track {
+  display: flex;
+  gap: clamp(14px, 3.5vw, 22px);
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0 clamp(18%, 24vw, 30%);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  outline: none;
+}
+
+.events-scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual Carousel Item Card Container */
+.event-scroll-item {
+  flex: 0 0 clamp(190px, 54vw, 245px);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease, filter 0.4s ease;
+  opacity: 0.65;
+  transform: scale(0.9);
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+}
+
+.event-scroll-item.is-active {
+  opacity: 1;
+  transform: scale(1.02);
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.65));
+}
+
+/* Event Card Button & Papercraft Styling */
+.event-card-btn {
+  position: relative;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.event-card-btn:focus-visible {
+  outline: 2px solid #e5c38c;
+  outline-offset: 3px;
+}
+
+.event-card-btn:hover {
+  transform: translateY(-4px);
+}
+
+/* Top Mini Golden Date Badge */
+.event-card-header-badge {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  right: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.badge-idx {
+  background: rgba(14, 38, 30, 0.8);
+  color: #f5dfb8;
+  border: 1px solid rgba(229, 195, 140, 0.55);
+  border-radius: 10px;
+  padding: 2px 7px;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+.badge-dt {
+  background: rgba(14, 38, 30, 0.8);
+  color: #f5dfb8;
+  border: 1px solid rgba(229, 195, 140, 0.55);
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+.event-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Bottom Tap Cue */
+.event-card-tap-cue {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.event-card-tap-cue span {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fcedd0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(229, 195, 140, 0.35);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.event-scroll-item.is-active .event-card-tap-cue span {
+  opacity: 0.95;
+}
+
+/* Carousel Footer: 10 Pagination Dots & Swipe Guidance */
+.event-carousel-footer {
+  position: absolute;
+  bottom: clamp(14px, 2.5vh, 24px);
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 12;
+  pointer-events: auto;
+}
+
+.event-dots-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14, 38, 30, 0.75);
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(229, 195, 140, 0.4);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.event-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(229, 195, 140, 0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.event-dot:hover {
+  background: rgba(229, 195, 140, 0.85);
+}
+
+.event-dot.is-active {
+  width: 20px;
+  height: 7px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #c5a059, #f7e1b5);
+  box-shadow: 0 0 8px rgba(247, 225, 181, 0.7);
+}
+
+.event-scroll-hint {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(9.5px, 2.4vw, 11px);
+  color: #f0deb8;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.event-scroll-hint span {
+  color: #e5c38c;
+  font-weight: bold;
+}
+
+/* Bottom Flowers Frame Across Bottom of Event Page */
+.event-bottom-flowers-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.event-bottom-lotus-img {
+  width: 100%;
+  height: auto;
+  max-height: clamp(120px, 22vh, 180px);
+  display: block;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 -4px 16px rgba(8, 28, 22, 0.45));
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: eventLotusBreathe 6.5s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes eventLotusBreathe {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.018) translateY(-3px);
+  }
+}
+
+
+/* ============================================================
+   VENUE & TRAVEL SECTION STYLES
+   ============================================================ */
+.travel-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.venue-corner-flower {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  width: clamp(75px, 20vw, 115px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+}
+
+.venue-flower-left {
+  top: 8px;
+  left: 8px;
+}
+
+.venue-flower-right {
+  top: 8px;
+  right: 8px;
+}
+
+.venue-header {
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  padding-top: clamp(48px, 9vh, 72px);
+  margin-bottom: clamp(6px, 1.4vh, 12px);
+}
+
+.venue-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(42px, 10.5vw, 56px);
+  font-weight: 600;
+  color: #fff9ee;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.88), 0 0 5px rgba(0, 0, 0, 0.6);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.venue-title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.venue-divider-line {
+  width: clamp(40px, 10vw, 65px);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #e5c38c, transparent);
+}
+
+.venue-divider-icon {
+  color: #e5c38c;
+  font-size: 13px;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.venue-card-container {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.venue-card-link {
+  display: block;
+  position: relative;
+  width: clamp(270px, 80vw, 350px);
+  max-width: 92%;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+  cursor: pointer;
+}
+
+.venue-card-link:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.venue-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
+}
+
+/* Bottom Matching Floral Garland & Border in Venue Section */
+.venue-bottom-flowers-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.venue-bottom-flowers-img {
+  width: 100%;
+  height: auto;
+  max-height: clamp(140px, 24vh, 210px);
+  display: block;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 -4px 16px rgba(4, 20, 14, 0.45));
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: venueFlowersBreathe 6.5s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes venueFlowersBreathe {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.015) translateY(-3px);
+  }
+}
+
+.gallery-scene {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.gallery-header {
+  text-align: center;
+  padding-top: clamp(20px, 4vh, 34px);
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Subtle luminous halo behind header to ensure crisp contrast on emerald paper */
+.gallery-header::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(320px, 88%);
+  height: 95%;
+  background: radial-gradient(ellipse at center, rgba(14, 69, 58, 0.75) 0%, rgba(14, 69, 58, 0.35) 60%, transparent 85%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.gallery-lotus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+.gallery-lotus svg path {
+  stroke: #f3d59b;
+}
+
+.gallery-title {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  font-size: clamp(46px, 12vw, 58px);
+  line-height: 1.05;
+  color: #fff4dc;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75), 0 0 15px rgba(243, 213, 155, 0.45);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.gallery-subtitle {
+  font-family: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(9px, 2.3vw, 11px);
+  letter-spacing: 0.28em;
+  color: #eed5a1;
+  text-transform: uppercase;
+  margin-top: 5px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+}
+
+/* Two-column layout placed comfortably below the header subtitle */
+.gallery-grid {
+  position: absolute;
+  top: clamp(192px, 25vh, 220px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(6px, 1.8vw, 12px);
+  padding: 0 clamp(8px, 2.8vw, 16px);
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.gallery-col {
+  flex: 1;
+  max-width: 195px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Stagger right column slightly lower matching reference */
+.gallery-col-left {
+  padding-top: 2px;
+}
+
+.gallery-col-right {
+  padding-top: clamp(14px, 2.5vh, 22px);
+}
+
+.gallery-card {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  background: #fbf8f0;
+  border: 1px solid rgba(215, 200, 175, 0.75);
+  border-radius: 2px;
+  padding: 6px 6px 20px;
+  box-shadow:
+    0 12px 28px rgba(3, 20, 16, 0.65),
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.38s ease;
+  cursor: pointer;
+  --rotation: 0deg;
+}
+
+.gallery-card:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+  box-shadow:
+    0 20px 44px rgba(3, 20, 16, 0.75),
+    0 4px 16px rgba(243, 213, 155, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+  z-index: 20 !important;
+}
+
+.gallery-card-inner {
+  position: relative;
+  border: 1px solid rgba(210, 192, 160, 0.65);
+  padding: 2px;
+  background: #ffffff;
+  border-radius: 1px;
+}
+
+.gallery-card-inner img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1px;
+  filter: saturate(1.02) contrast(1.01);
+}
+
+/* Card 1: Top-Left - Rohan & Kavya close-up */
+.gallery-card-1 {
+  --rotation: -5.8deg;
+  z-index: 3;
+}
+
+/* Card 3: Bottom-Left - Hands holding with mehndi & bangles */
+/* Negative margin eliminates vertical gap and creates natural overlap */
+.gallery-card-3 {
+  --rotation: 4deg;
+  margin-top: clamp(-16px, -2.2vh, -8px);
+  z-index: 2;
+}
+
+/* Card 2: Top-Right - Couple on terrace overlooking sunset lake */
+.gallery-card-2 {
+  --rotation: 5.2deg;
+  z-index: 3;
+}
+
+/* Card 4: Bottom-Right - Under floral arch overlooking lake */
+/* Negative margin eliminates vertical gap and creates natural overlap */
+.gallery-card-4 {
+  --rotation: -4.8deg;
+  margin-top: clamp(-16px, -2.2vh, -8px);
+  z-index: 2;
+}
+
+@media (max-height: 720px) {
+  .gallery-header {
+    padding-top: 12px;
+  }
+  .gallery-title {
+    font-size: 40px;
+  }
+  .gallery-subtitle {
+    font-size: 8.5px;
+    letter-spacing: 0.22em;
+  }
+  .gallery-grid {
+    top: 80px;
+    bottom: 6px;
+  }
+  .gallery-card {
+    padding: 5px 5px 16px;
+  }
+  .gallery-card-3,
+  .gallery-card-4 {
+    margin-top: -12px;
+  }
+}
+
+.rsvp-scene {
+  color: #2b2018;
+  background-position: center top;
+}
+
+.rsvp-wrap {
+  position: absolute;
+  z-index: 4;
+  top: clamp(38px, 8vh, 65px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(270px, 76vw, 325px);
+  max-width: 88%;
+  text-align: center;
+}
+
+.rsvp-header {
+  margin-bottom: 0;
+}
+
+.rsvp-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(38px, 9.2vw, 52px);
+  font-weight: 700;
+  color: #1b120c;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.rsvp-subtitle {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(18px, 4.4vw, 24px);
+  font-weight: 600;
+  color: #0e2b20;
+  letter-spacing: 0.02em;
+  margin: 4px 0 0 0;
+  line-height: 1.15;
+}
+
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(9px, 1.6vh, 14px);
+  margin-top: clamp(12px, 2.2vh, 18px);
+  width: 100%;
+}
+
+.rsvp-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: clamp(42px, 5.4vh, 48px);
+  background: #f6eedb;
+  border: 1.5px solid #957947;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(60, 40, 20, 0.05);
+  transition: all 0.2s ease;
+}
+
+.rsvp-input-box:focus-within {
+  border-color: #705525;
+  background: #ffffff;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03), 0 0 0 2.5px rgba(149, 121, 71, 0.28);
+}
+
+.rsvp-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  color: #0e2b20;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.rsvp-field {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 14px 0 44px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1b140d;
+}
+
+.rsvp-field::placeholder {
+  color: #938270;
+  font-style: italic;
+  font-size: 13.5px;
+}
+
+.rsvp-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: clamp(14px, 2.4vh, 22px) auto 0 auto;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
+}
+
+.rsvp-button-img {
+  width: clamp(225px, 64vw, 275px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(70, 40, 15, 0.35));
+}
+
+.rsvp-button:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.rsvp-button:hover .rsvp-button-img {
+  filter: brightness(1.05) drop-shadow(0 8px 18px rgba(70, 40, 15, 0.45));
+}
+
+.rsvp-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.rsvp-presence {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(14.5px, 3.8vw, 18px);
+  font-style: italic;
+  font-weight: 500;
+  color: #112418;
+  line-height: 1.32;
+  text-align: center;
+  margin: clamp(12px, 2.2vh, 20px) 0 0 0;
+  letter-spacing: 0.01em;
+}
+
+.thank-message {
+  padding: 16px 12px;
+  background: rgba(251, 245, 234, 0.92);
+  border: 1.5px solid #ab894c;
+  border-radius: 10px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.thank-message b {
+  display: block;
+  font-size: 19px;
+  color: #1e1610;
+  margin-bottom: 4px;
+}
+
+.thank-message span {
+  display: block;
+  font-size: 14px;
+  font-style: italic;
+  color: #0d2e27;
+}
+
+.rsvp-edit-btn {
+  margin-top: 10px;
+  background: #a57434;
+  color: #fffaf0;
+  border: 1px solid #d4a956;
+  border-radius: 16px;
+  padding: 5px 14px;
+  font-size: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   FINALE SCENE PAPERCRAFT BOATS & MOVABLE CLOUDS
+   ============================================================ */
+
+.finale-scene {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center bottom;
+}
+
+/* Movable Clouds Layer - Fixed on Top-Right & Top-Left with 2px-3px triangle float */
+.finale-clouds-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 38%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+.movable-cloud-wrap {
+  position: absolute;
+  display: block;
+}
+
+.movable-cloud-wrap .cloud-img,
+.movable-cloud-wrap .cloud-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(10, 70, 84, 0.22));
+}
+
+/* Cloud fixed on top-right with 2px-3px triangle motion */
+.cloud-fixed-right {
+  top: 1.2%;
+  right: -2%;
+  width: clamp(170px, 42vw, 255px);
+  animation: triangleFloatCloudRight 7.0s ease-in-out infinite;
+  opacity: 0.98;
+}
+
+/* Cloud fixed on top-left with 2px-3px triangle motion */
+.cloud-fixed-left {
+  top: 1%;
+  left: -2%;
+  width: clamp(175px, 44vw, 265px);
+  animation: triangleFloatCloudLeft 7.8s ease-in-out infinite;
+  animation-delay: -3.5s;
+  opacity: 0.96;
+}
+
+/* 2px-3px Triangle direction motion for clouds */
+@keyframes triangleFloatCloudRight {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  33.3% {
+    transform: translate3d(2.5px, -3px, 0);
+  }
+
+  66.6% {
+    transform: translate3d(-2.5px, -1px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes triangleFloatCloudLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  33.3% {
+    transform: translate3d(-2.5px, -3px, 0);
+  }
+
+  66.6% {
+    transform: translate3d(2.5px, -1px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* River Water Layer for Floating Boats */
+.finale-boats-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.floating-boat-wrap {
+  position: absolute;
+  display: block;
+}
+
+.floating-boat-wrap .boat-img,
+.floating-boat-wrap .boat-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(9, 69, 82, 0.32));
+}
+
+/* Boat 1: Distant upstream small sailboat */
+.floating-boat-distant {
+  bottom: 40.8%;
+  left: 49.6%;
+  transform: translateX(-50%);
+  width: clamp(34px, 8.5vw, 48px);
+  animation: triangleBoatFloatDistant 5.8s ease-in-out infinite;
+  transform-origin: 50% 88%;
+}
+
+.floating-boat-distant .boat-water-ripple {
+  height: 8px;
+  bottom: 3px;
+  animation: waterRipplePulse 5.8s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+
+/* Boat 2: Small floating sailboat on left river bend */
+.floating-boat-small {
+  bottom: 25.8%;
+  left: clamp(14%, 22%, 24%);
+  transform: translateX(-50%);
+  width: clamp(55px, 14vw, 78px);
+  animation: triangleBoatFloatLeft 6.4s ease-in-out infinite;
+  animation-delay: -3.6s;
+  transform-origin: 50% 88%;
+}
+
+.floating-boat-small .boat-water-ripple {
+  height: 11px;
+  bottom: 5px;
+  animation: waterRipplePulse 6.4s ease-in-out infinite;
+  animation-delay: -3.1s;
+}
+
+/* Boat 3: Center prominent hero sailboat */
+.floating-boat-primary {
+  bottom: 23.4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(125px, 30vw, 168px);
+  animation: triangleBoatFloatHero 5.2s ease-in-out infinite;
+  transform-origin: 50% 88%;
+}
+
+.floating-boat-primary .boat-water-ripple {
+  height: 15px;
+  bottom: 7px;
+  animation: waterRipplePulse 5.2s ease-in-out infinite;
+}
+
+/* Boat 4: Lower-right floating sailboat */
+.floating-boat-secondary {
+  bottom: 14.5%;
+  left: clamp(74%, 79.5%, 83%);
+  transform: translateX(-50%);
+  width: clamp(75px, 19vw, 105px);
+  animation: triangleBoatFloatRight 4.8s ease-in-out infinite;
+  animation-delay: -2.2s;
+  transform-origin: 50% 88%;
+}
+
+.floating-boat-secondary .boat-water-ripple {
+  height: 12px;
+  bottom: 6px;
+  animation: waterRipplePulse 4.8s ease-in-out infinite;
+  animation-delay: -2.3s;
+}
+
+/* 2px-3px Triangle motion + gentle water rocking for Distant Boat */
+@keyframes triangleBoatFloatDistant {
+  0% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+
+  33.3% {
+    transform: translate3d(calc(-50% + 2px), -2.5px, 0) rotate(1.0deg);
+  }
+
+  66.6% {
+    transform: translate3d(calc(-50% - 2px), 1.5px, 0) rotate(-0.8deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+}
+
+/* 2px-3px Triangle motion + gentle water rocking for Left Boat */
+@keyframes triangleBoatFloatLeft {
+  0% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+
+  33.3% {
+    transform: translate3d(calc(-50% - 2.5px), -3px, 0) rotate(-1.3deg);
+  }
+
+  66.6% {
+    transform: translate3d(calc(-50% + 2px), 2px, 0) rotate(1.1deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+}
+
+/* 2px-3px Triangle motion + gentle water rocking for Center Hero Boat */
+@keyframes triangleBoatFloatHero {
+  0% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+
+  33.3% {
+    transform: translate3d(calc(-50% + 2.5px), -3px, 0) rotate(1.3deg);
+  }
+
+  66.6% {
+    transform: translate3d(calc(-50% - 2px), 2.5px, 0) rotate(-1.1deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+}
+
+/* 2px-3px Triangle motion + gentle water rocking for Right Boat */
+@keyframes triangleBoatFloatRight {
+  0% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+
+  33.3% {
+    transform: translate3d(calc(-50% + 2px), -3px, 0) rotate(1.5deg);
+  }
+
+  66.6% {
+    transform: translate3d(calc(-50% - 2.5px), 2px, 0) rotate(-1.3deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
+  }
+}
+
+/* Soft water ripples pulsing beneath each boat */
+.boat-water-ripple {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(200, 248, 252, 0.65) 0%, rgba(95, 185, 195, 0.35) 55%, transparent 78%);
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+@keyframes waterRipplePulse {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(0.94);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.08);
+    opacity: 0.88;
+  }
+}
+
+/* Copy Header - shifted down, elegant royal font & high contrast */
+.finale-copy {
+  position: relative;
+  z-index: 10;
+  padding-top: clamp(80px, 16vh, 125px);
+  text-align: center;
+  color: #052329;
+}
+
+.finale-copy h2 {
+  font-family: "Great Vibes", "Cormorant Garamond", cursive, serif;
+  font-size: clamp(48px, 12.5vw, 68px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: #042128;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.98), 0 0 16px rgba(255, 255, 255, 0.95), 0 0 28px rgba(255, 235, 180, 0.9);
+  margin: 0;
+}
+
+.finale-copy p {
+  font-family: "Cinzel", 'Montserrat', serif;
+  text-transform: uppercase;
+  font-size: clamp(10px, 2.5vw, 12px);
+  letter-spacing: 0.28em;
+  font-weight: 700;
+  color: #7a4e25;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 0 10px rgba(255, 255, 255, 0.9);
+  margin: 8px 0 0 0;
+}
+
+.finale-copy span {
+  display: block;
+  margin-top: 10px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(15px, 3.8vw, 18px);
+  color: #072e36;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 0 14px rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================
+   FINALE SECTION BOTTOM STUDIO FOOTER CREDIT
+   ============================================================ */
+.finale-footer {
+  position: absolute;
+  bottom: clamp(14px, 2.5vh, 26px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+.finale-credit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Cinzel", "Montserrat", serif;
+  font-size: clamp(9px, 2.2vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff8ec;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(4, 30, 36, 0.48);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 235, 190, 0.28);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.finale-credit-link:hover {
+  background: rgba(4, 30, 36, 0.75);
+  border-color: rgba(255, 215, 120, 0.6);
+  color: #ffd885;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #0a2925c7;
+  backdrop-filter: blur(5px);
+  animation: fade .25s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.event-modal {
+  position: relative;
+  width: min(320px, 94%);
+  padding: 28px 20px 24px;
+  text-align: center;
+  color: #2b1d15;
+  background: #f3dfba;
+  border: 1px solid #d0a763;
+  box-shadow: 0 14px 40px #061815;
+}
+
+.event-modal::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid #bd965b;
+  pointer-events: none;
+}
+
+.event-modal .close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  font-family: serif;
+  font-size: 22px;
+  color: #563722;
+}
+
+.event-modal p {
+  font-size: 8px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.event-modal h2 {
+  font-size: 40px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.event-modal>span {
+  display: block;
+  font-family: "Cormorant Garamond";
+  font-size: 15px;
+  font-style: italic;
+}
+
+.event-modal>small {
+  display: block;
+  margin-top: 14px;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+@media (max-width: 600px) {
+  .invitation-shell {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .scene {
+    height: 100svh;
+    min-height: 100svh;
+    max-height: none;
+  }
+
+  .chapter-nav {
+    right: 5px;
+    gap: 5px;
+  }
+
+  .chapter-nav span {
+    display: none;
+  }
+}
+
+@media (max-height: 720px) {
+  .hero-copy {
+    top: 4%;
+  }
+
+  .hero-tap-to-open {
+    bottom: clamp(20px, 4.5vh, 36px);
+    padding: 10px 22px;
+  }
+
+  .light-title {
+    padding-top: 55px;
+  }
+  .light-title h2 {
+    font-size: 44px;
+  }
+  .light-title > p {
+    font-size: 12px;
+  }
+
+  .story-beats {
+    inset: 15% 4% 3%;
+  }
+
+  .beat img {
+    width: 72px;
+    height: 88px;
+    border-bottom-width: 12px;
+  }
+
+  .beat p {
+    width: 78px;
+  }
+
+  .beat b {
+    font-size: 13px;
+  }
+
+  .venue-header {
+    padding-top: clamp(38px, 7.5vh, 56px);
+    margin-bottom: 6px;
+  }
+
+  .venue-card-link {
+    width: clamp(220px, 68vw, 280px);
+  }
+
+  .venue-corner-flower {
+    width: clamp(60px, 16vw, 90px);
+  }
+
+  .rsvp-wrap {
+    top: clamp(28px, 6vh, 48px);
+    width: clamp(260px, 76vw, 310px);
+  }
+
+  .rsvp-title {
+    font-size: clamp(34px, 8.5vw, 44px);
+  }
+
+  .rsvp-subtitle {
+    font-size: 16px;
+  }
+
+  .rsvp-button-img {
+    width: clamp(205px, 58vw, 245px);
+  }
+
+  .rsvp-presence {
+    font-size: 13.5px;
+    margin-top: 10px;
+  }
+
+  .photo-line {
+    inset: 15% 5% 4%;
+  }
+
+  .event-banners {
+    inset: 16% 5% 7%;
+  }
+
+  .couple-header {
+    padding-top: clamp(14px, 2.5vh, 22px);
+  }
+
+  .couple-center-stage {
+    margin-top: clamp(14px, 2.4vh, 20px);
+    width: clamp(210px, 58vw, 255px);
+  }
+
+  .couple-arch-img {
+    max-height: clamp(260px, 42vh, 320px);
+  }
+}
+
+/* ============================================================
+   PAGE BORDER FLORAL GARLAND (VENUE, RSVP, FINALE)
+   ============================================================ */
+.section-floral-border-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.section-floral-garland-img {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+
+.venue-border-top {
+  top: 0;
+  z-index: 4;
+}
+
+.rsvp-border-top {
+  top: -2px;
+  z-index: 4;
+}
+
+.finale-border-top {
+  top: 0;
+  z-index: 5;
+}
+
+/* ============================================================
+   RSVP SECTION MOVABLE CLOUDS (TOP-LEFT & TOP-RIGHT)
+   ============================================================ */
+.rsvp-clouds-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.rsvp-cloud {
+  position: absolute;
+  width: clamp(110px, 30vw, 150px);
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+}
+
+.rsvp-cloud-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rsvp-cloud-left {
+  top: 3.5%;
+  left: -2%;
+  animation: rsvpCloudDriftLeft 8.5s ease-in-out infinite;
+}
+
+.rsvp-cloud-right {
+  top: 3%;
+  right: -2%;
+  animation: rsvpCloudDriftRight 9.2s ease-in-out infinite;
+}
+
+@keyframes rsvpCloudDriftLeft {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(8px, 4px, 0) scale(1.04);
+  }
+}
+
+@keyframes rsvpCloudDriftRight {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-8px, 3px, 0) scale(1.03);
+  }
+}
+
+
+
+/* ============================================================
+   HANDCRAFTED PAPER-CUT FLYING BIRDS ANIMATION SYSTEM
+   Avian Biomechanics: Articulated shoulder & wrist kinematics,
+   aerodynamic lift bobbing & pitch, tail stabilization flutter,
+   and continuous opposite-direction loops with an exact 700ms pause.
+   ============================================================ */
+.paper-birds-system {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* Flight Tracks */
+.bird-flight-track {
+  position: absolute;
+  left: 0;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Green Bird Track: Right -> Left */
+.green-bird-flight-track {
+  top: 15%;
+  animation: greenBirdFlight 7.0s linear infinite;
+}
+
+/* Orange Bird Track: Left -> Right */
+.orange-bird-flight-track {
+  top: 28%;
+  animation: orangeBirdFlight 7.7s linear infinite 1.2s;
+}
+
+/* Vertical Altitudes for Finale Section */
+.paper-birds-finale .green-bird-flight-track {
+  top: 17%;
+}
+
+.paper-birds-finale .orange-bird-flight-track {
+  top: 31%;
+}
+
+/* ------------------------------------------------------------
+   FLIGHT PATH KEYFRAMES WITH EXACT 700ms (0.7s) OFF-SCREEN PAUSE
+   ------------------------------------------------------------ */
+
+/* Green Bird: Right -> Left
+   Total cycle: 7.00s.
+   Active flight across screen (0% to 90.0%): 6.30s.
+   Off-screen pause beyond left edge (90.0% to 100%): exactly 0.70s (700 milliseconds). */
+@keyframes greenBirdFlight {
+  0% {
+    transform: translate3d(calc(var(--track-width, 100cqw) + 60px), 0, 0);
+    animation-timing-function: linear;
+  }
+
+  90% {
+    transform: translate3d(-90px, 0, 0);
+    animation-timing-function: step-end;
+  }
+
+  100% {
+    transform: translate3d(-90px, 0, 0);
+  }
+}
+
+/* Orange Bird: Left -> Right
+   Total cycle: 7.70s.
+   Active flight across screen (0% to 90.91%): 7.00s.
+   Off-screen pause beyond right edge (90.91% to 100%): exactly 0.70s (700 milliseconds). */
+@keyframes orangeBirdFlight {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+    animation-timing-function: linear;
+  }
+
+  90.91% {
+    transform: translate3d(calc(var(--track-width, 100cqw) + 60px), 0, 0);
+    animation-timing-function: step-end;
+  }
+
+  100% {
+    transform: translate3d(calc(var(--track-width, 100cqw) + 60px), 0, 0);
+  }
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE BIRD CONTAINERS & SVG SCALING
+   ------------------------------------------------------------ */
+.bird-svg-container {
+  width: clamp(40px, 9vw, 56px);
+  aspect-ratio: 180 / 150;
+  display: block;
+  pointer-events: none;
+}
+
+.papercut-bird-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* Drop-shadow for overall bird elevation */
+.green-bird-container {
+  filter: drop-shadow(0 3px 6px rgba(5, 20, 11, 0.32));
+}
+
+.orange-bird-container {
+  filter: drop-shadow(0 3px 6px rgba(35, 12, 4, 0.32));
+}
+
+/* ------------------------------------------------------------
+   AERODYNAMIC BODY LIFT & PITCH BOBBING
+   Lift generated on downstroke, settled during recovery upstroke
+   ------------------------------------------------------------ */
+.gb-bobber {
+  transform-origin: 85px 78px;
+  will-change: transform;
+  animation: greenBirdBob 0.38s ease-in-out infinite;
+}
+
+.ob-bobber {
+  transform-origin: 95px 78px;
+  will-change: transform;
+  animation: orangeBirdBob 0.42s ease-in-out infinite 0.1s;
+}
+
+@keyframes greenBirdBob {
+  0% {
+    transform: translate3d(0, 0.8px, 0) rotate(1.2deg);
+  }
+
+  35% {
+    transform: translate3d(0, -2.6px, 0) rotate(-2deg);
+  }
+
+  60% {
+    transform: translate3d(0, -2.2px, 0) rotate(-0.5deg);
+  }
+
+  85% {
+    transform: translate3d(0, 0.3px, 0) rotate(0.8deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0.8px, 0) rotate(1.2deg);
+  }
+}
+
+@keyframes orangeBirdBob {
+  0% {
+    transform: translate3d(0, 0.9px, 0) rotate(1.2deg);
+  }
+
+  35% {
+    transform: translate3d(0, -2.8px, 0) rotate(-2deg);
+  }
+
+  60% {
+    transform: translate3d(0, -2.4px, 0) rotate(-0.5deg);
+  }
+
+  85% {
+    transform: translate3d(0, 0.3px, 0) rotate(0.8deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0.9px, 0) rotate(1.2deg);
+  }
+}
+
+/* ------------------------------------------------------------
+   NEAR WING FLAPPING (Articulated Shoulder Joint)
+   Downstroke: fast & forceful (~35% of cycle)
+   Upstroke: smooth recovery fold (~65% of cycle)
+   ------------------------------------------------------------ */
+.gb-wing-near {
+  transform-origin: 74px 70px;
+  will-change: transform;
+  animation: greenWingFlap 0.38s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+.ob-wing-near {
+  transform-origin: 106px 70px;
+  will-change: transform;
+  animation: orangeWingFlap 0.42s cubic-bezier(0.25, 0.1, 0.25, 1) infinite 0.1s;
+}
+
+@keyframes greenWingFlap {
+  0% {
+    transform: rotate(24deg) scaleY(1.04);
+  }
+
+  35% {
+    transform: rotate(-26deg) scaleY(0.92);
+  }
+
+  60% {
+    transform: rotate(-18deg) scaleY(0.95);
+  }
+
+  85% {
+    transform: rotate(10deg) scaleY(1.01);
+  }
+
+  100% {
+    transform: rotate(24deg) scaleY(1.04);
+  }
+}
+
+@keyframes orangeWingFlap {
+  0% {
+    transform: rotate(-24deg) scaleY(1.04);
+  }
+
+  35% {
+    transform: rotate(26deg) scaleY(0.92);
+  }
+
+  60% {
+    transform: rotate(18deg) scaleY(0.95);
+  }
+
+  85% {
+    transform: rotate(-10deg) scaleY(1.01);
+  }
+
+  100% {
+    transform: rotate(-24deg) scaleY(1.04);
+  }
+}
+
+/* ------------------------------------------------------------
+   PRIMARY FEATHER WRIST ARTICULATION (Natural Feather Lag / Flex)
+   ------------------------------------------------------------ */
+.gb-wing-primaries {
+  transform-origin: 96px 54px;
+  will-change: transform;
+  animation: greenPrimariesFlex 0.38s ease-in-out infinite;
+}
+
+.ob-wing-primaries {
+  transform-origin: 84px 54px;
+  will-change: transform;
+  animation: orangePrimariesFlex 0.42s ease-in-out infinite 0.1s;
+}
+
+@keyframes greenPrimariesFlex {
+  0% {
+    transform: rotate(-8deg);
+  }
+
+  35% {
+    transform: rotate(12deg);
+  }
+
+  60% {
+    transform: rotate(8deg);
+  }
+
+  85% {
+    transform: rotate(-4deg);
+  }
+
+  100% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes orangePrimariesFlex {
+  0% {
+    transform: rotate(8deg);
+  }
+
+  35% {
+    transform: rotate(-12deg);
+  }
+
+  60% {
+    transform: rotate(-8deg);
+  }
+
+  85% {
+    transform: rotate(4deg);
+  }
+
+  100% {
+    transform: rotate(8deg);
+  }
+}
+
+/* ------------------------------------------------------------
+   FAR WING FLAPPING (Background 3D Depth)
+   ------------------------------------------------------------ */
+.gb-wing-far {
+  transform-origin: 82px 60px;
+  will-change: transform;
+  animation: greenFarWingFlap 0.38s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+.ob-wing-far {
+  transform-origin: 98px 60px;
+  will-change: transform;
+  animation: orangeFarWingFlap 0.42s cubic-bezier(0.25, 0.1, 0.25, 1) infinite 0.1s;
+}
+
+@keyframes greenFarWingFlap {
+  0% {
+    transform: rotate(-16deg) scaleY(1.03);
+  }
+
+  35% {
+    transform: rotate(22deg) scaleY(0.93);
+  }
+
+  60% {
+    transform: rotate(16deg) scaleY(0.96);
+  }
+
+  85% {
+    transform: rotate(-6deg) scaleY(1.01);
+  }
+
+  100% {
+    transform: rotate(-16deg) scaleY(1.03);
+  }
+}
+
+@keyframes orangeFarWingFlap {
+  0% {
+    transform: rotate(16deg) scaleY(1.03);
+  }
+
+  35% {
+    transform: rotate(-22deg) scaleY(0.93);
+  }
+
+  60% {
+    transform: rotate(-16deg) scaleY(0.96);
+  }
+
+  85% {
+    transform: rotate(6deg) scaleY(1.01);
+  }
+
+  100% {
+    transform: rotate(16deg) scaleY(1.03);
+  }
+}
+
+/* ------------------------------------------------------------
+   TAIL FEATHER STABILIZATION FLUTTER
+   ------------------------------------------------------------ */
+.gb-tail {
+  transform-origin: 112px 88px;
+  will-change: transform;
+  animation: greenTailFlutter 0.38s ease-in-out infinite;
+}
+
+.ob-tail {
+  transform-origin: 68px 88px;
+  will-change: transform;
+  animation: orangeTailFlutter 0.42s ease-in-out infinite 0.1s;
+}
+
+@keyframes greenTailFlutter {
+  0% {
+    transform: rotate(-1.5deg);
+  }
+
+  35% {
+    transform: rotate(4deg);
+  }
+
+  60% {
+    transform: rotate(2.5deg);
+  }
+
+  85% {
+    transform: rotate(-0.5deg);
+  }
+
+  100% {
+    transform: rotate(-1.5deg);
+  }
+}
+
+@keyframes orangeTailFlutter {
+  0% {
+    transform: rotate(1.5deg);
+  }
+
+  35% {
+    transform: rotate(-4deg);
+  }
+
+  60% {
+    transform: rotate(-2.5deg);
+  }
+
+  85% {
+    transform: rotate(0.5deg);
+  }
+
+  100% {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* ============================================================
+   BOTTOM-RIGHT FLOATING MUSIC BUTTON (AFTER HERO VIDEO ENDS)
+   ============================================================ */
+.music-player-wrap {
+  position: fixed;
+  bottom: clamp(18px, 3.5vh, 28px);
+  /* On desktop, keep aligned with invitation shell right edge; on mobile, pinned to right */
+  right: calc(50% - min(207px, 50vw) + 16px);
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px) scale(0.85);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.music-player-wrap.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.music-toggle-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37;
+  background: radial-gradient(circle at 35% 30%, #1e4a42 0%, #0d2a25 75%, #051614 100%);
+  color: #fff4d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 14px rgba(212, 175, 55, 0.35);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  outline: none;
+}
+
+.music-toggle-btn:hover {
+  transform: scale(1.08);
+  border-color: #ffd885;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+.music-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* Pulsing outer aura ring when playing */
+.music-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  pointer-events: none;
+  animation: musicPulse 2.4s ease-out infinite;
+}
+
+.music-pulse-ring.ring-2 {
+  animation-delay: 1.2s;
+}
+
+@keyframes musicPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.48);
+    opacity: 0;
+  }
+}
+
+.music-icon-disc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.music-toggle-btn.is-playing .music-icon-disc {
+  animation: spinMusicNote 8s linear infinite;
+}
+
+@keyframes spinMusicNote {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.music-svg-icon {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+
+  .bird-flight-track,
+  .gb-bobber,
+  .ob-bobber,
+  .gb-wing-near,
+  .ob-wing-near,
+  .gb-wing-primaries,
+  .ob-wing-primaries,
+  .gb-wing-far,
+  .ob-wing-far,
+  .gb-tail,
+  .ob-tail {
+    animation: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
