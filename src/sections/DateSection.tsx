@@ -67,8 +67,6 @@ export function DateSection({
             }}
           >
             <div className="light-title">
-              <p>{dateDetails.title}</p>
-
               <h2>
                 {coupleDetails.bride} <i>&</i> {coupleDetails.groom}
               </h2>
@@ -79,12 +77,6 @@ export function DateSection({
                 <span />
               </div>
             </div>
-
-            <p className="date-note">
-              {dateDetails.location}
-              <br />
-              <small>{dateDetails.note}</small>
-            </p>
           </div>
         </Section>
       </div>

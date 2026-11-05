@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Section } from "../components/Section";
 import { HeroPapercraftDecorations } from "../components/HeroPapercraftDecorations";
@@ -36,7 +35,6 @@ export function HeroSection({
 }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [hasEnded, setHasEnded] = useState(videoEnded);
 
@@ -57,14 +55,7 @@ export function HeroSection({
       };
 
       const preventTouch = (e: TouchEvent) => {
-        if (
-          e.target instanceof Element &&
-          e.target.closest(
-            "button, video, .hero-control-bar, .hero-video-scrim"
-          )
-        ) {
-          return;
-        }
+        // Prevent touch scrolling without affecting tap/click interactions
         e.preventDefault();
       };
 
@@ -112,40 +103,25 @@ export function HeroSection({
     }
   }, [hasEnded]);
 
+  // Play / Pause Video
   const handlePlayTap = () => {
     if (!videoRef.current) return;
 
     const video = videoRef.current;
 
     if (video.paused) {
-      video.muted = isMuted;
-
-      video
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          video.muted = true;
-          setIsMuted(true);
-          video.play().then(() => setIsPlaying(true));
-        });
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch((error) => {
+        console.error("Video playback failed:", error);
+      });
     } else {
       video.pause();
       setIsPlaying(false);
     }
   };
 
-  const toggleSound = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    if (!videoRef.current) return;
-
-    const nextMuted = !videoRef.current.muted;
-    videoRef.current.muted = nextMuted;
-    setIsMuted(nextMuted);
-  };
-
+  // Update Video Progress
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
 
@@ -156,6 +132,7 @@ export function HeroSection({
     }
   };
 
+  // Handle Video End
   const handleVideoEnded = () => {
     setIsPlaying(false);
     setHasEnded(true);
@@ -166,6 +143,7 @@ export function HeroSection({
     }
   };
 
+  // Skip Intro
   const handleSkip = (e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -178,6 +156,7 @@ export function HeroSection({
     handleVideoEnded();
   };
 
+  // Replay Video
   const handleReplay = (e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -188,13 +167,15 @@ export function HeroSection({
     if (!videoRef.current) return;
 
     videoRef.current.currentTime = 0;
-    videoRef.current.muted = isMuted;
 
     videoRef.current.play().then(() => {
       setIsPlaying(true);
+    }).catch((error) => {
+      console.error("Video replay failed:", error);
     });
   };
 
+  // Scroll to Next Section
   const handleScrollCue = () => {
     if (onScrollCue) {
       onScrollCue();
@@ -207,6 +188,7 @@ export function HeroSection({
 
   return (
     <Section id="home" className="hero hero-video-scene">
+
       {/* Background Video */}
       <video
         ref={videoRef}
@@ -227,7 +209,7 @@ export function HeroSection({
         onClick={handlePlayTap}
       />
 
-      {/* Papercraft Decorations with Adjustable Positions */}
+      {/* Papercraft Decorations */}
       <HeroPapercraftDecorations
         ohmStyle={{
           top: HERO_LAYOUT.ohm.top,
@@ -257,25 +239,16 @@ export function HeroSection({
           >
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
+
           <span className="hero-tap-to-open-text">
             Tap to open
           </span>
         </button>
       )}
 
-      {/* Video Controls */}
+      {/* Video Controls - Skip Only */}
       {isPlaying && (
         <div className="hero-control-bar">
-          <button
-            type="button"
-            className="hero-ctrl-btn"
-            onClick={toggleSound}
-            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            title={isMuted ? "Unmute" : "Mute"}
-          >
-            {isMuted ? "🔇" : "🔊"}
-          </button>
-
           <button
             type="button"
             className="hero-ctrl-btn hero-skip-btn"
@@ -314,10 +287,11 @@ export function HeroSection({
             onClick={handleScrollCue}
             aria-label="Scroll to wedding date"
           >
-            <span>↓</span>Begin
+            <span>↓</span> Begin
           </button>
         </div>
       )}
+
     </Section>
   );
 }

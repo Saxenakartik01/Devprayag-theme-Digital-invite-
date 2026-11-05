@@ -9,8 +9,12 @@ export function VenueSection() {
 
   // Venue card size and position
   const cardWidth = "min(430px, 94vw)";
-  const cardTop = "clamp(55px, 9vh, 100px)";
+  const cardTop = "clamp(55px, 9svh, 100px)";
   const cardX = "0px";
+
+  // Section title settings
+  const titleFontSize = "clamp(50px, 12.5vw, 65px)";
+  const titleY = "16px";
 
   // Top-left flower
   const leftFlowerWidth = "125px";
@@ -71,8 +75,21 @@ export function VenueSection() {
       />
 
       {/* Section title */}
-      <header className="venue-header" data-reveal>
-        <h2 className="venue-title">Venue</h2>
+      <header
+        className="venue-header"
+        data-reveal
+        style={{
+          transform: `translateY(${titleY})`,
+        }}
+      >
+        <h2
+          className="venue-title"
+          style={{
+            fontSize: titleFontSize,
+          }}
+        >
+          Venue
+        </h2>
 
         <div className="venue-title-divider" aria-hidden="true">
           <span className="venue-divider-line" />

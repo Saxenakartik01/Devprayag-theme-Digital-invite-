@@ -1,5 +1,6 @@
 import { Section } from "../components/Section";
 import { PapercraftFlyingBirds } from "../components/PapercraftFlyingBirds";
+import { DraggableDecor } from "../components/DraggableDecor";
 import { finaleDetails, weddingImages } from "../data/wedding";
 
 export interface FinaleSectionProps {
@@ -7,21 +8,30 @@ export interface FinaleSectionProps {
 }
 
 /**
- * Floating Papercraft Boat with water ripple reflection
+ * Floating Papercraft Boat with water ripple reflection & drag-and-release interaction (limited to 12px radius)
  */
 function PapercraftBoat({
   src,
   alt = "",
   className = "",
   style,
+  ariaLabel = "Interactive papercraft boat",
+  maxRadius = 12,
 }: {
   src: string;
   alt?: string;
   className?: string;
   style?: React.CSSProperties;
+  ariaLabel?: string;
+  maxRadius?: number;
 }) {
   return (
-    <div className={`floating-boat-wrap ${className}`} style={style}>
+    <DraggableDecor
+      className={`floating-boat-wrap ${className}`}
+      style={style}
+      ariaLabel={ariaLabel}
+      maxRadius={maxRadius}
+    >
       {/* Water ripple & reflection under the boat */}
       <div className="boat-water-ripple" aria-hidden="true" />
       <img
@@ -30,16 +40,17 @@ function PapercraftBoat({
         className="boat-img"
         loading="eager"
         decoding="async"
+        draggable={false}
         aria-hidden="true"
       />
-    </div>
+    </DraggableDecor>
   );
 }
 
 /**
- * Movable Papercraft Cloud drifting across the sky
+ * Papercraft Cloud drifting across the sky with gentle floating motion
  */
-function MovableCloud({
+function FloatingCloud({
   src,
   className = "",
   style,
@@ -49,13 +60,14 @@ function MovableCloud({
   style?: React.CSSProperties;
 }) {
   return (
-    <div className={`movable-cloud-wrap ${className}`} style={style} aria-hidden="true">
+    <div className={`movable-cloud-wrap ${className}`} style={style}>
       <img
         src={src}
         alt=""
         className="cloud-img"
         loading="eager"
         decoding="async"
+        draggable={false}
       />
     </div>
   );
@@ -64,15 +76,15 @@ function MovableCloud({
 export function FinaleSection({ onReturnToTop: _onReturnToTop }: FinaleSectionProps) {
   return (
     <Section id="thanks" image={weddingImages.finale} className="finale-scene">
-      {/* Papercraft Clouds fixed at Top-Right and Top-Left with 2px-3px triangle motion */}
+      {/* Papercraft Clouds fixed at Top-Right and Top-Left with gentle floating motion */}
       <div className="finale-clouds-layer" aria-hidden="true">
         {/* Cloud fixed on top-right */}
-        <MovableCloud
+        <FloatingCloud
           src="/images/decorations/final_cloud_right.png"
           className="cloud-fixed-right"
         />
         {/* Cloud fixed on top-left */}
-        <MovableCloud
+        <FloatingCloud
           src="/images/decorations/final_cloud.png"
           className="cloud-fixed-left"
         />
@@ -85,33 +97,36 @@ export function FinaleSection({ onReturnToTop: _onReturnToTop }: FinaleSectionPr
       <div className="finale-copy" data-reveal>
         <h2>{finaleDetails.title}</h2>
         <p>{finaleDetails.place}</p>
-        <span>{finaleDetails.message}</span>
       </div>
 
-      {/* Floating Boats with Realistic Water Physics & Triangle float motion */}
-      <div className="finale-boats-layer" aria-hidden="true">
+      {/* Floating Boats with Realistic Water Physics & Drag-and-Release Interaction */}
+      <div className="finale-boats-layer">
         {/* Boat 1: Distant upstream small sailboat */}
         <PapercraftBoat
           src="/images/decorations/final_boat_distant.png"
           className="floating-boat-distant"
+          ariaLabel="Interactive distant sailboat"
         />
 
         {/* Boat 2: Small floating sailboat on left river bend */}
         <PapercraftBoat
           src="/images/decorations/final_boat_small.png"
           className="floating-boat-small"
+          ariaLabel="Interactive small sailboat"
         />
 
         {/* Boat 3: Center-foreground prominent hero sailboat */}
         <PapercraftBoat
           src="/images/decorations/final_boat_center.png"
           className="floating-boat-primary"
+          ariaLabel="Interactive hero sailboat"
         />
 
         {/* Boat 4: Lower-right floating sailboat */}
         <PapercraftBoat
           src="/images/decorations/final_boat_side.png"
           className="floating-boat-secondary"
+          ariaLabel="Interactive river sailboat"
         />
       </div>
 

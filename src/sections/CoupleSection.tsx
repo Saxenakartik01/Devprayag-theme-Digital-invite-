@@ -1,10 +1,22 @@
 import { Section } from "../components/Section";
 import { coupleDetails, weddingImages } from "../data/wedding";
 
+// ==========================================
+// ADJUSTABLE SETTINGS
+// ==========================================
+const COUPLE_LAYOUT = {
+  // Center stage (frame & names) vertical position - shifted more bottom side
+  stageY: "clamp(105px, 15svh, 140px)",
+  // Frame width - increased size
+  frameWidth: "clamp(265px, 72vw, 330px)",
+  // Gap between arch frame and couple text
+  wordsMarginTop: "clamp(10px, 1.6svh, 16px)",
+};
+
 export function CoupleSection() {
   return (
     <Section id="couple" image={weddingImages.couple} className="couple-scene">
-      {/* Top Floating Papercraft Clouds with Gentle Motion */}
+      {/* Top Floating Papercraft Clouds with Gentle Floating Motion */}
       <div className="couple-clouds-container" aria-hidden="true">
         <div className="couple-cloud couple-cloud-left">
           <img
@@ -13,8 +25,10 @@ export function CoupleSection() {
             className="couple-cloud-img"
             loading="eager"
             decoding="async"
+            draggable={false}
           />
         </div>
+
         <div className="couple-cloud couple-cloud-right">
           <img
             src="/images/decorations/couple_cloud_right.png"
@@ -22,21 +36,20 @@ export function CoupleSection() {
             className="couple-cloud-img"
             loading="eager"
             decoding="async"
+            draggable={false}
           />
         </div>
       </div>
 
-      {/* Top Header Typography */}
-      <header className="couple-header" data-reveal>
-        <span className="couple-eyebrow">The Couple</span>
-        <h2 className="couple-names">
-          {coupleDetails.groom} <span className="couple-amp">&amp;</span> {coupleDetails.bride}
-        </h2>
-        {/* <p className="couple-tagline">{coupleDetails.eyebrow}</p> */}
-      </header>
-
-      {/* Couple Center Stage: Arch Frame & Vows directly below frame */}
-      <div className="couple-center-stage" data-reveal>
+      {/* Couple Center Stage: Arch Frame & Names directly below frame */}
+      <div
+        className="couple-center-stage"
+        data-reveal
+        style={{
+          marginTop: COUPLE_LAYOUT.stageY,
+          width: COUPLE_LAYOUT.frameWidth,
+        }}
+      >
         <div className="couple-frame-container">
           <img
             src="/images/decorations/couple_papercraft_jharokha.png"
@@ -47,10 +60,16 @@ export function CoupleSection() {
           />
         </div>
 
-        {/* Vows / Love Words positioned directly below the frame */}
-        <div className="couple-words">
-          <p>{coupleDetails.words.he}</p>
-          <span>{coupleDetails.words.she}</span>
+        {/* Couple Names positioned directly below the frame */}
+        <div
+          className="couple-words"
+          style={{
+            marginTop: COUPLE_LAYOUT.wordsMarginTop,
+          }}
+        >
+          <h2 className="couple-names">
+            {coupleDetails.groom} <span className="couple-amp">&amp;</span> {coupleDetails.bride}
+          </h2>
         </div>
       </div>
 

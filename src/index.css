@@ -15,11 +15,19 @@
 html {
   scroll-behavior: smooth;
   background: #b89669;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
   min-width: 320px;
+  overflow-x: hidden;
+  touch-action: manipulation;
   background: radial-gradient(circle at 50% 20%, #ead9b7, #b68c5e 68%, #8b663f);
 }
 
@@ -46,7 +54,9 @@ button {
 
 .scene {
   position: relative;
+  height: 100vh;
   height: 100svh;
+  min-height: 100vh;
   min-height: 100svh;
   max-height: 844px;
   background-size: cover;
@@ -90,13 +100,23 @@ h2 {
 
 .chapter-nav {
   position: fixed;
-  right: max(calc((100vw - 414px)/2 + 8px), 6px);
+  right: max(calc((100% - 414px)/2 + 8px), 6px);
   top: 50%;
+  top: 50svh;
   transform: translateY(-50%);
   z-index: 50;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  pointer-events: auto;
+  will-change: transform, opacity;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.chapter-nav.is-hidden {
+  opacity: 0;
+  transform: translateY(-50%) translateY(20px);
+  pointer-events: none;
 }
 
 .chapter-nav button {
@@ -139,7 +159,7 @@ h2 {
 
 .section-title {
   text-align: center;
-  padding-top: clamp(30px, 5.5vh, 48px);
+  padding-top: clamp(30px, 5.5svh, 48px);
   position: relative;
   z-index: 3;
 }
@@ -167,11 +187,16 @@ h2 {
   color: #201510;
 }
 
-/* Scroll lock during video playback */
-html.video-scroll-locked,
+/* Scroll lock during video playback - zero jumping or upward shift on mobile */
+html.video-scroll-locked {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
 body.video-scroll-locked {
   overflow: hidden !important;
-  height: 100vh !important;
+  height: 100% !important;
+  height: 100svh !important;
   touch-action: none !important;
   overscroll-behavior: none !important;
 }
@@ -298,7 +323,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: clamp(130px, 24vh, 170px);
+  height: clamp(130px, 24svh, 170px);
   pointer-events: none;
   z-index: 11;
 }
@@ -360,7 +385,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
    ============================================================ */
 .hero-tap-to-open {
   position: absolute;
-  bottom: clamp(32px, 6.5vh, 56px);
+  bottom: clamp(32px, 6.5svh, 56px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 25;
@@ -374,7 +399,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(229, 195, 140, 0.65);
-  box-shadow: 
+  box-shadow:
     0 10px 32px rgba(0, 0, 0, 0.65),
     inset 0 1px 1px rgba(255, 255, 255, 0.25),
     0 0 22px rgba(212, 168, 83, 0.25);
@@ -389,7 +414,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   transform: translateX(-50%) scale(1.05);
   background: rgba(28, 20, 14, 0.8);
   border-color: rgba(247, 222, 175, 0.95);
-  box-shadow: 
+  box-shadow:
     0 14px 40px rgba(0, 0, 0, 0.75),
     inset 0 1px 2px rgba(255, 255, 255, 0.35),
     0 0 30px rgba(212, 168, 83, 0.45);
@@ -420,14 +445,17 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 @keyframes heroTapPulse {
-  0%, 100% {
-    box-shadow: 
+
+  0%,
+  100% {
+    box-shadow:
       0 10px 32px rgba(0, 0, 0, 0.65),
       inset 0 1px 1px rgba(255, 255, 255, 0.25),
       0 0 18px rgba(212, 168, 83, 0.2);
   }
+
   50% {
-    box-shadow: 
+    box-shadow:
       0 12px 36px rgba(0, 0, 0, 0.75),
       inset 0 1px 1px rgba(255, 255, 255, 0.35),
       0 0 28px rgba(212, 168, 83, 0.55);
@@ -435,9 +463,12 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 @keyframes tapIconBob {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(0);
   }
+
   50% {
     transform: translateX(2px);
   }
@@ -585,7 +616,9 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .hero-date-stage {
   position: relative;
   width: 100%;
+  height: 100vh;
   height: 100svh;
+  min-height: 100vh;
   min-height: 100svh;
   max-height: 844px;
   overflow: hidden;
@@ -603,6 +636,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .date-layer .scene {
   width: 100%;
   height: 100%;
+  min-height: 100%;
+  max-height: 100%;
 }
 
 /* Date Scene (Data Page) with Background Video */
@@ -670,6 +705,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .hero-layer .scene {
   width: 100%;
   height: 100%;
+  min-height: 100%;
+  max-height: 100%;
 }
 
 .light-title {
@@ -680,11 +717,11 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   gap: 8px;
   text-align: center;
   color: #fff4dc;
-  padding-top: clamp(80px, 15vh, 120px);
+  padding-top: clamp(80px, 15svh, 120px);
 }
 
 /* "Together at the sacred Sangam" subtitle - clean without background black shadow */
-.light-title > p {
+.light-title>p {
   font-family: "Cinzel", "Cormorant Garamond", Georgia, serif;
   font-size: clamp(13px, 3.4vw, 16px);
   font-weight: 600;
@@ -700,14 +737,15 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   gap: 12px;
 }
 
-.light-title > p::before,
-.light-title > p::after {
+.light-title>p::before,
+.light-title>p::after {
   content: '';
   width: 20px;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(252, 232, 195, 0.85));
 }
-.light-title > p::after {
+
+.light-title>p::after {
   background: linear-gradient(90deg, rgba(252, 232, 195, 0.85), transparent);
 }
 
@@ -753,13 +791,14 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   height: 1px;
   background: linear-gradient(90deg, transparent, #eed5a1);
 }
+
 .date-rule span:last-child {
   background: linear-gradient(90deg, #eed5a1, transparent);
 }
 
 .date-note {
   position: absolute;
-  bottom: clamp(18px, 4.5vh, 32px);
+  bottom: clamp(18px, 4.5svh, 32px);
   width: 100%;
   text-align: center;
   color: #fff4dc;
@@ -784,7 +823,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 .story-scene .section-title.cream {
-  padding-top: clamp(28px, 5.5vh, 46px);
+  padding-top: clamp(28px, 5.5svh, 46px);
   position: relative;
   z-index: 4;
 }
@@ -896,6 +935,40 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 /* ============================================================
+   GLOBAL INTERACTIVE DRAGGABLE DECOR (BOATS & CLOUDS)
+   ============================================================ */
+.draggable-decor-item {
+  position: absolute;
+  pointer-events: auto !important;
+  touch-action: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  will-change: transform;
+  z-index: 20;
+}
+
+.draggable-decor-item.is-dragging {
+  cursor: grabbing !important;
+  z-index: 50 !important;
+}
+
+.draggable-decor-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.draggable-decor-item img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ============================================================
    COUPLE SECTION TOP FLOATING PAPERCRAFT CLOUDS
    ============================================================ */
 .couple-clouds-container {
@@ -905,14 +978,15 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 3;
-  overflow: hidden;
+  z-index: 15;
+  overflow: visible;
 }
 
 .couple-cloud {
   position: absolute;
   height: auto;
   pointer-events: none;
+  cursor: default;
   will-change: transform;
 }
 
@@ -921,43 +995,59 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   height: auto;
   display: block;
   filter: drop-shadow(0 6px 16px rgba(105, 75, 45, 0.22));
+  pointer-events: none;
 }
 
 .couple-cloud-left {
-  top: clamp(6px, 1.8vh, 22px);
+  top: clamp(6px, 1.8svh, 22px);
   left: clamp(-15px, -2vw, 4px);
   width: clamp(120px, 32vw, 160px);
   animation: coupleCloudFloatLeft 7.5s ease-in-out infinite;
 }
 
 .couple-cloud-right {
-  top: clamp(10px, 2.4vh, 28px);
+  top: clamp(10px, 2.4svh, 28px);
   right: clamp(-12px, -1.8vw, 6px);
   width: clamp(105px, 28vw, 145px);
   animation: coupleCloudFloatRight 8.8s ease-in-out infinite;
 }
 
+.couple-cloud-left .draggable-decor-inner,
+.couple-cloud-left:not(.draggable-decor-item) {
+  animation: coupleCloudFloatLeft 7.5s ease-in-out infinite;
+}
+
+.couple-cloud-right .draggable-decor-inner,
+.couple-cloud-right:not(.draggable-decor-item) {
+  animation: coupleCloudFloatRight 8.8s ease-in-out infinite;
+}
+
 @keyframes coupleCloudFloatLeft {
+
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
+
   50% {
     transform: translate3d(12px, -6px, 0) scale(1.025);
   }
 }
 
 @keyframes coupleCloudFloatRight {
+
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
+
   50% {
     transform: translate3d(-10px, 5px, 0) scale(0.98);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .couple-cloud-left,
   .couple-cloud-right {
     animation: none;
@@ -967,7 +1057,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Header container at top in parchment sky */
 .couple-header {
   text-align: center;
-  padding-top: clamp(24px, 4.5vh, 38px);
+  padding-top: clamp(24px, 4.5svh, 38px);
   padding-bottom: 6px;
   padding-left: 20px;
   padding-right: 20px;
@@ -1061,13 +1151,13 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
 }
 
-/* Couple Center Stage: Arch Frame & Vows directly below frame */
+/* Couple Center Stage: Arch Frame & Names directly below frame */
 .couple-center-stage {
   position: relative;
-  margin-top: clamp(24px, 3.8vh, 38px);
+  margin-top: clamp(105px, 15svh, 140px);
   margin-left: auto;
   margin-right: auto;
-  width: clamp(235px, 64vw, 295px);
+  width: clamp(265px, 72vw, 330px);
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -1086,7 +1176,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 
 .couple-arch-img {
   width: 100%;
-  max-height: clamp(310px, 46vh, 380px);
+  max-height: clamp(345px, 50svh, 420px);
   object-fit: contain;
   height: auto;
   display: block;
@@ -1125,11 +1215,11 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   filter: drop-shadow(0 -4px 12px rgba(9, 36, 31, 0.22));
 }
 
-/* Vows Pill positioned directly below frame */
+/* Couple Names Pill positioned directly below frame */
 .couple-words {
   position: relative;
-  margin-top: clamp(8px, 1.4vh, 14px);
-  width: 100%;
+  margin-top: clamp(8px, 1.4svh, 14px);
+  width: auto;
   max-width: 320px;
   box-sizing: border-box;
   display: flex;
@@ -1137,40 +1227,42 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 8px 16px;
-  background: rgba(14, 38, 33, 0.82);
+  padding: 8px 22px;
+  background: rgba(14, 38, 33, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(220, 195, 145, 0.45);
-  border-radius: 14px;
+  border-radius: 9999px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.18);
   pointer-events: auto;
   z-index: 6;
 }
 
-.couple-words p {
-  margin: 0;
-  color: #fcedcf;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(14px, 3.6vw, 16.5px);
+.couple-words .couple-names {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(20px, 5.2vw, 26px);
+  line-height: 1.15;
   font-style: italic;
-  letter-spacing: 0.02em;
-  line-height: 1.35;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff1d0;
+  margin: 0;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(243, 213, 155, 0.35);
 }
 
-.couple-words span {
-  display: block;
-  margin-top: 2px;
-  color: #e5c38c;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(14px, 3.6vw, 16.5px);
+.couple-words .couple-amp {
   font-style: italic;
-  letter-spacing: 0.02em;
-  line-height: 1.35;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  color: #f3d59b;
+  margin: 0 6px;
+  display: inline-block;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.65),
+    0 0 8px rgba(212, 168, 83, 0.5);
 }
 
 /* ============================================================
@@ -1205,7 +1297,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Section Header: Our Celebrations Title & Dynamic Counter */
 .event-header-title {
   position: absolute;
-  top: clamp(14px, 3vh, 26px);
+  top: clamp(14px, 3svh, 26px);
   left: 0;
   width: 100%;
   text-align: center;
@@ -1228,10 +1320,10 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 .event-main-title {
-  font-family: "Cinzel Decorative", "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   font-style: italic;
   font-weight: 700;
-  font-size: clamp(30px, 7.5vw, 42px);
+  font-size: clamp(34px, 8.5vw, 48px);
   color: #17110c;
   line-height: 1.05;
   letter-spacing: 0.02em;
@@ -1274,8 +1366,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* 10-Events Interactive Snap Carousel Shell */
 .events-carousel-shell {
   position: absolute;
-  top: clamp(118px, 17vh, 142px);
-  bottom: clamp(90px, 14vh, 120px);
+  top: clamp(118px, 17svh, 142px);
+  bottom: clamp(90px, 14svh, 120px);
   left: 0;
   right: 0;
   z-index: 10;
@@ -1367,29 +1459,242 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.65));
 }
 
-/* Event Card Button & Papercraft Styling */
-.event-card-btn {
+/* Event Card 3D Flip Open Flipper & Papercraft Styling */
+.event-card-flipper {
   position: relative;
   width: 100%;
-  border: none;
-  background: transparent;
-  padding: 0;
+  perspective: 1200px;
   cursor: pointer;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   outline: none;
+  border-radius: 12px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.3s ease;
 }
 
-.event-card-btn:focus-visible {
+.event-card-flipper:focus-visible {
   outline: 2px solid #e5c38c;
   outline-offset: 3px;
 }
 
-.event-card-btn:hover {
+.event-card-flipper:hover {
   transform: translateY(-4px);
+}
+
+.event-card-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.34, 1.25, 0.64, 1), box-shadow 0.4s ease;
+  border-radius: 12px;
+}
+
+.event-card-flipper.flipped .event-card-inner {
+  transform: rotateY(180deg);
+}
+
+.event-scroll-item.is-card-flipped {
+  opacity: 1 !important;
+  z-index: 10;
+}
+
+.event-card-front,
+.event-card-back {
+  position: relative;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.event-card-front {
+  display: flex;
+  flex-direction: column;
+  transform: rotateY(0deg);
+}
+
+/* Event Card Back (Ceremony Invitation Inside - Royal Beige Parchment) */
+.event-card-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  background: linear-gradient(155deg, #fbf6ec 0%, #f4ebd6 50%, #eadabe 100%);
+  border: 1.5px solid #c89d48;
+  border-radius: 12px;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.45),
+    inset 0 0 20px rgba(190, 145, 75, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Ornate Inner Double Border with Corner Accents */
+.event-card-back-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(168, 120, 52, 0.5);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: clamp(8px, 1.8svh, 14px) clamp(8px, 2.5vw, 14px);
+  box-sizing: border-box;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, transparent 80%);
+}
+
+.event-card-back-frame::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(168, 120, 52, 0.32);
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.back-top-emblem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 1px rgba(120, 80, 20, 0.2));
+}
+
+.back-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(8px, 2.2vw, 9.5px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5c3a16;
+  background: rgba(238, 222, 195, 0.9);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(168, 120, 52, 0.45);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.back-ceremony-title {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(20px, 5.5vw, 28px);
+  font-style: italic;
+  font-weight: 700;
+  color: #271609;
+  margin: 1px 0 0 0;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(180, 140, 80, 0.2);
+}
+
+.back-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 80%;
+  margin: 1px 0;
+}
+
+.back-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b8863b, transparent);
+  opacity: 0.75;
+}
+
+.back-divider-flower {
+  color: #9c6827;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.back-note {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(11.5px, 2.8vw, 13px);
+  font-style: italic;
+  color: #45301f;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-shadow: none;
+  max-width: 95%;
+}
+
+.back-time-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: rgba(238, 224, 198, 0.75);
+  border: 1px solid rgba(168, 120, 52, 0.35);
+  border-radius: 8px;
+  padding: 3px 8px;
+  width: 95%;
+  box-sizing: border-box;
+}
+
+.back-time-location span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(7.5px, 1.8vw, 9px);
+  letter-spacing: 0.03em;
+  color: #422b18;
+  font-weight: 500;
+  text-align: center;
+}
+
+.back-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.back-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.back-btn-flip {
+  background: linear-gradient(135deg, #dfc699 0%, #caa968 100%);
+  border: 1px solid rgba(140, 95, 30, 0.5);
+  color: #2b180a;
+}
+
+.back-btn-flip:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #e8d1a4 0%, #d5b576 100%);
+}
+
+.back-btn-modal {
+  background: rgba(253, 248, 238, 0.95);
+  border: 1px solid rgba(168, 120, 52, 0.55);
+  color: #5c3a16;
+}
+
+.back-btn-modal:hover {
+  transform: scale(1.05);
+  background: #ffffff;
+  border-color: #8f5c1d;
+  color: #2b180a;
 }
 
 /* Top Mini Golden Date Badge */
@@ -1475,7 +1780,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Carousel Footer: 10 Pagination Dots & Swipe Guidance */
 .event-carousel-footer {
   position: absolute;
-  bottom: clamp(14px, 2.5vh, 24px);
+  bottom: clamp(14px, 2.5svh, 24px);
   left: 0;
   width: 100%;
   display: flex;
@@ -1552,7 +1857,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .event-bottom-lotus-img {
   width: 100%;
   height: auto;
-  max-height: clamp(120px, 22vh, 180px);
+  max-height: clamp(120px, 22svh, 180px);
   display: block;
   object-fit: contain;
   object-position: center bottom;
@@ -1564,9 +1869,12 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 @keyframes eventLotusBreathe {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1) translateY(0);
   }
+
   50% {
     transform: scale(1.018) translateY(-3px);
   }
@@ -1610,14 +1918,14 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   text-align: center;
   position: relative;
   z-index: 5;
-  padding-top: clamp(48px, 9vh, 72px);
-  margin-bottom: clamp(6px, 1.4vh, 12px);
+  padding-top: clamp(48px, 9svh, 72px);
+  margin-bottom: clamp(6px, 1.4svh, 12px);
 }
 
 .venue-title {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
-  font-size: clamp(42px, 10.5vw, 56px);
+  font-size: clamp(50px, 12.5vw, 65px);
   font-weight: 600;
   color: #fff9ee;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.88), 0 0 5px rgba(0, 0, 0, 0.6);
@@ -1695,7 +2003,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .venue-bottom-flowers-img {
   width: 100%;
   height: auto;
-  max-height: clamp(140px, 24vh, 210px);
+  max-height: clamp(140px, 24svh, 210px);
   display: block;
   object-fit: contain;
   object-position: center bottom;
@@ -1707,9 +2015,12 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 @keyframes venueFlowersBreathe {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1) translateY(0);
   }
+
   50% {
     transform: scale(1.015) translateY(-3px);
   }
@@ -1724,7 +2035,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 
 .gallery-header {
   text-align: center;
-  padding-top: clamp(20px, 4vh, 34px);
+  padding-top: clamp(20px, 4svh, 34px);
   position: relative;
   z-index: 5;
   display: flex;
@@ -1785,13 +2096,13 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Two-column layout placed comfortably below the header subtitle */
 .gallery-grid {
   position: absolute;
-  top: clamp(192px, 25vh, 220px);
+  top: clamp(192px, 25svh, 220px);
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: clamp(6px, 1.8vw, 12px);
+  gap: clamp(4px, 1.2vw, 8px);
   padding: 0 clamp(8px, 2.8vw, 16px);
   z-index: 2;
   pointer-events: auto;
@@ -1799,7 +2110,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 
 .gallery-col {
   flex: 1;
-  max-width: 195px;
+  max-width: 178px;
   display: flex;
   flex-direction: column;
 }
@@ -1810,7 +2121,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 .gallery-col-right {
-  padding-top: clamp(14px, 2.5vh, 22px);
+  padding-top: clamp(14px, 2.5svh, 22px);
 }
 
 .gallery-card {
@@ -1833,7 +2144,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 .gallery-card:hover {
-  transform: scale(1.08) rotate(0deg) !important;
+  transform: scale(0.98) rotate(0deg) !important;
   box-shadow:
     0 20px 44px rgba(3, 20, 16, 0.75),
     0 4px 16px rgba(243, 213, 155, 0.4),
@@ -1868,7 +2179,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Negative margin eliminates vertical gap and creates natural overlap */
 .gallery-card-3 {
   --rotation: 4deg;
-  margin-top: clamp(-16px, -2.2vh, -8px);
+  margin-top: clamp(-20px, -2.8svh, -12px);
   z-index: 2;
 }
 
@@ -1882,7 +2193,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 /* Negative margin eliminates vertical gap and creates natural overlap */
 .gallery-card-4 {
   --rotation: -4.8deg;
-  margin-top: clamp(-16px, -2.2vh, -8px);
+  margin-top: clamp(-20px, -2.8svh, -12px);
   z-index: 2;
 }
 
@@ -1890,20 +2201,25 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   .gallery-header {
     padding-top: 12px;
   }
+
   .gallery-title {
     font-size: 40px;
   }
+
   .gallery-subtitle {
     font-size: 8.5px;
     letter-spacing: 0.22em;
   }
+
   .gallery-grid {
     top: 80px;
     bottom: 6px;
   }
+
   .gallery-card {
     padding: 5px 5px 16px;
   }
+
   .gallery-card-3,
   .gallery-card-4 {
     margin-top: -12px;
@@ -1918,7 +2234,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .rsvp-wrap {
   position: absolute;
   z-index: 4;
-  top: clamp(38px, 8vh, 65px);
+  top: clamp(38px, 8svh, 65px);
   left: 50%;
   transform: translateX(-50%);
   width: clamp(270px, 76vw, 325px);
@@ -1953,8 +2269,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .rsvp-form {
   display: flex;
   flex-direction: column;
-  gap: clamp(9px, 1.6vh, 14px);
-  margin-top: clamp(12px, 2.2vh, 18px);
+  gap: clamp(9px, 1.6svh, 14px);
+  margin-top: clamp(12px, 2.2svh, 18px);
   width: 100%;
 }
 
@@ -1963,7 +2279,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   display: flex;
   align-items: center;
   width: 100%;
-  height: clamp(42px, 5.4vh, 48px);
+  height: clamp(42px, 5.4svh, 48px);
   background: #f6eedb;
   border: 1.5px solid #957947;
   border-radius: 8px;
@@ -2010,7 +2326,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   background: transparent;
   border: none;
   padding: 0;
-  margin: clamp(14px, 2.4vh, 22px) auto 0 auto;
+  margin: clamp(14px, 2.4svh, 22px) auto 0 auto;
   cursor: pointer;
   display: block;
   outline: none;
@@ -2044,7 +2360,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   color: #112418;
   line-height: 1.32;
   text-align: center;
-  margin: clamp(12px, 2.2vh, 20px) 0 0 0;
+  margin: clamp(12px, 2.2svh, 20px) 0 0 0;
   letter-spacing: 0.01em;
 }
 
@@ -2103,13 +2419,15 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   width: 100%;
   height: 38%;
   pointer-events: none;
-  z-index: 5;
+  z-index: 15;
   overflow: visible;
 }
 
 .movable-cloud-wrap {
   position: absolute;
   display: block;
+  pointer-events: none;
+  cursor: default;
 }
 
 .movable-cloud-wrap .cloud-img,
@@ -2118,6 +2436,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   height: auto;
   display: block;
   filter: drop-shadow(0 4px 10px rgba(10, 70, 84, 0.22));
+  pointer-events: none;
 }
 
 /* Cloud fixed on top-right with 2px-3px triangle motion */
@@ -2125,8 +2444,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   top: 1.2%;
   right: -2%;
   width: clamp(170px, 42vw, 255px);
-  animation: triangleFloatCloudRight 7.0s ease-in-out infinite;
   opacity: 0.98;
+  animation: triangleFloatCloudRight 7.0s ease-in-out infinite;
 }
 
 /* Cloud fixed on top-left with 2px-3px triangle motion */
@@ -2134,9 +2453,20 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   top: 1%;
   left: -2%;
   width: clamp(175px, 44vw, 265px);
+  opacity: 0.96;
   animation: triangleFloatCloudLeft 7.8s ease-in-out infinite;
   animation-delay: -3.5s;
-  opacity: 0.96;
+}
+
+.cloud-fixed-right .draggable-decor-inner,
+.cloud-fixed-right:not(.draggable-decor-item) {
+  animation: triangleFloatCloudRight 7.0s ease-in-out infinite;
+}
+
+.cloud-fixed-left .draggable-decor-inner,
+.cloud-fixed-left:not(.draggable-decor-item) {
+  animation: triangleFloatCloudLeft 7.8s ease-in-out infinite;
+  animation-delay: -3.5s;
 }
 
 /* 2px-3px Triangle direction motion for clouds */
@@ -2183,12 +2513,16 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 6;
+  z-index: 16;
+  overflow: visible;
 }
 
 .floating-boat-wrap {
   position: absolute;
   display: block;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
 }
 
 .floating-boat-wrap .boat-img,
@@ -2197,14 +2531,18 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   height: auto;
   display: block;
   filter: drop-shadow(0 4px 8px rgba(9, 69, 82, 0.32));
+  pointer-events: none;
 }
 
 /* Boat 1: Distant upstream small sailboat */
 .floating-boat-distant {
   bottom: 40.8%;
   left: 49.6%;
-  transform: translateX(-50%);
   width: clamp(34px, 8.5vw, 48px);
+}
+
+.floating-boat-distant .draggable-decor-inner,
+.floating-boat-distant:not(.draggable-decor-item) {
   animation: triangleBoatFloatDistant 5.8s ease-in-out infinite;
   transform-origin: 50% 88%;
 }
@@ -2220,8 +2558,11 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .floating-boat-small {
   bottom: 25.8%;
   left: clamp(14%, 22%, 24%);
-  transform: translateX(-50%);
   width: clamp(55px, 14vw, 78px);
+}
+
+.floating-boat-small .draggable-decor-inner,
+.floating-boat-small:not(.draggable-decor-item) {
   animation: triangleBoatFloatLeft 6.4s ease-in-out infinite;
   animation-delay: -3.6s;
   transform-origin: 50% 88%;
@@ -2238,8 +2579,11 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .floating-boat-primary {
   bottom: 23.4%;
   left: 50%;
-  transform: translateX(-50%);
   width: clamp(125px, 30vw, 168px);
+}
+
+.floating-boat-primary .draggable-decor-inner,
+.floating-boat-primary:not(.draggable-decor-item) {
   animation: triangleBoatFloatHero 5.2s ease-in-out infinite;
   transform-origin: 50% 88%;
 }
@@ -2254,8 +2598,11 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .floating-boat-secondary {
   bottom: 14.5%;
   left: clamp(74%, 79.5%, 83%);
-  transform: translateX(-50%);
   width: clamp(75px, 19vw, 105px);
+}
+
+.floating-boat-secondary .draggable-decor-inner,
+.floating-boat-secondary:not(.draggable-decor-item) {
   animation: triangleBoatFloatRight 4.8s ease-in-out infinite;
   animation-delay: -2.2s;
   transform-origin: 50% 88%;
@@ -2374,7 +2721,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .finale-copy {
   position: relative;
   z-index: 10;
-  padding-top: clamp(80px, 16vh, 125px);
+  padding-top: clamp(80px, 16svh, 125px);
   text-align: center;
   color: #052329;
 }
@@ -2418,7 +2765,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
    ============================================================ */
 .finale-footer {
   position: absolute;
-  bottom: clamp(14px, 2.5vh, 26px);
+  bottom: clamp(14px, 2.5svh, 26px);
   left: 0;
   right: 0;
   display: flex;
@@ -2485,6 +2832,19 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   background: #f3dfba;
   border: 1px solid #d0a763;
   box-shadow: 0 14px 40px #061815;
+  animation: modalFlipOpen 0.45s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+
+@keyframes modalFlipOpen {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateY(-25deg) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) scale(1);
+  }
 }
 
 .event-modal::before {
@@ -2535,18 +2895,36 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 }
 
 @media (max-width: 600px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   .invitation-shell {
     width: 100%;
     max-width: 100%;
     margin: 0;
+    padding: 0;
     box-shadow: none;
     border-radius: 0;
+    overflow-x: hidden;
   }
 
-  .scene {
+  .scene,
+  .hero-date-stage {
+    height: 100vh;
     height: 100svh;
+    min-height: 100vh;
     min-height: 100svh;
     max-height: none;
+  }
+
+  .date-layer .scene,
+  .hero-layer .scene {
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
   }
 
   .chapter-nav {
@@ -2557,6 +2935,27 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   .chapter-nav span {
     display: none;
   }
+
+  .hero-top-header {
+    top: max(2%, env(safe-area-inset-top, 8px));
+  }
+
+  .hero-control-bar {
+    top: max(16px, calc(env(safe-area-inset-top, 0px) + 12px));
+    right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px));
+  }
+
+  .hero-tap-to-open {
+    bottom: max(clamp(28px, 6svh, 48px), calc(env(safe-area-inset-bottom, 0px) + 20px));
+  }
+
+  .hero-ended-actions {
+    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 14px));
+  }
+
+  .date-note {
+    bottom: max(clamp(16px, 4svh, 28px), calc(env(safe-area-inset-bottom, 0px) + 12px));
+  }
 }
 
 @media (max-height: 720px) {
@@ -2565,17 +2964,19 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   }
 
   .hero-tap-to-open {
-    bottom: clamp(20px, 4.5vh, 36px);
+    bottom: clamp(20px, 4.5svh, 36px);
     padding: 10px 22px;
   }
 
   .light-title {
     padding-top: 55px;
   }
+
   .light-title h2 {
     font-size: 44px;
   }
-  .light-title > p {
+
+  .light-title>p {
     font-size: 12px;
   }
 
@@ -2598,7 +2999,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   }
 
   .venue-header {
-    padding-top: clamp(38px, 7.5vh, 56px);
+    padding-top: clamp(38px, 7.5svh, 56px);
     margin-bottom: 6px;
   }
 
@@ -2611,7 +3012,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   }
 
   .rsvp-wrap {
-    top: clamp(28px, 6vh, 48px);
+    top: clamp(28px, 6svh, 48px);
     width: clamp(260px, 76vw, 310px);
   }
 
@@ -2641,16 +3042,16 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   }
 
   .couple-header {
-    padding-top: clamp(14px, 2.5vh, 22px);
+    padding-top: clamp(14px, 2.5svh, 22px);
   }
 
   .couple-center-stage {
-    margin-top: clamp(14px, 2.4vh, 20px);
-    width: clamp(210px, 58vw, 255px);
+    margin-top: clamp(90px, 13svh, 120px);
+    width: clamp(240px, 66vw, 290px);
   }
 
   .couple-arch-img {
-    max-height: clamp(260px, 42vh, 320px);
+    max-height: clamp(295px, 46svh, 360px);
   }
 }
 
@@ -2701,8 +3102,8 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 3;
-  overflow: hidden;
+  z-index: 15;
+  overflow: visible;
 }
 
 .rsvp-cloud {
@@ -2710,12 +3111,15 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   width: clamp(110px, 30vw, 150px);
   height: auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+  pointer-events: none;
+  cursor: default;
 }
 
 .rsvp-cloud-img {
   width: 100%;
   height: auto;
   display: block;
+  pointer-events: none;
 }
 
 .rsvp-cloud-left {
@@ -2727,6 +3131,16 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
 .rsvp-cloud-right {
   top: 3%;
   right: -2%;
+  animation: rsvpCloudDriftRight 9.2s ease-in-out infinite;
+}
+
+.rsvp-cloud-left .draggable-decor-inner,
+.rsvp-cloud-left:not(.draggable-decor-item) {
+  animation: rsvpCloudDriftLeft 8.5s ease-in-out infinite;
+}
+
+.rsvp-cloud-right .draggable-decor-inner,
+.rsvp-cloud-right:not(.draggable-decor-item) {
   animation: rsvpCloudDriftRight 9.2s ease-in-out infinite;
 }
 
@@ -3173,7 +3587,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
    ============================================================ */
 .music-player-wrap {
   position: fixed;
-  bottom: clamp(18px, 3.5vh, 28px);
+  bottom: max(clamp(18px, 3.5svh, 28px), calc(env(safe-area-inset-bottom, 0px) + 14px));
   /* On desktop, keep aligned with invitation shell right edge; on mobile, pinned to right */
   right: calc(50% - min(207px, 50vw) + 16px);
   z-index: 90;
@@ -3236,6 +3650,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
     transform: scale(0.92);
     opacity: 0.9;
   }
+
   100% {
     transform: scale(1.48);
     opacity: 0;
@@ -3257,6 +3672,7 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

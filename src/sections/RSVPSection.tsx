@@ -1,4 +1,3 @@
-
 import { useState, type FormEvent } from "react";
 import { Section } from "../components/Section";
 import { weddingImages } from "../data/wedding";
@@ -17,7 +16,7 @@ export function RSVPSection() {
       image={weddingImages.rsvp}
       className="rsvp-scene"
     >
-      {/* Floating Papercraft Clouds */}
+      {/* Floating Papercraft Clouds with Gentle Floating Motion */}
       <div className="rsvp-clouds-layer" aria-hidden="true">
         <div className="rsvp-cloud rsvp-cloud-left">
           <img
@@ -26,6 +25,7 @@ export function RSVPSection() {
             className="rsvp-cloud-img"
             loading="eager"
             decoding="async"
+            draggable={false}
           />
         </div>
 
@@ -36,6 +36,7 @@ export function RSVPSection() {
             className="rsvp-cloud-img"
             loading="eager"
             decoding="async"
+            draggable={false}
           />
         </div>
       </div>
@@ -271,22 +272,6 @@ export function RSVPSection() {
           </form>
         )}
 
-        {/* Bottom Message */}
-        <p
-          className="rsvp-presence"
-          style={{
-            width: "100%",
-            textAlign: "center",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          Your presence
-          <br />
-          will make celebration
-          <br />
-          even more special.
-        </p>
       </div>
     </Section>
   );

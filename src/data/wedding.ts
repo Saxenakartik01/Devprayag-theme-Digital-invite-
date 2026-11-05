@@ -29,7 +29,7 @@ export const coupleDetails = {
 };
 
 export const dateDetails = {
-  title: "Together at the sacred Sangam",
+  title: "",
   dateFormatted: "12 · 12 · 2025",
   location: "Prayagraj, Uttar Pradesh",
   note: "as the rivers meet, so do our lives",
@@ -117,6 +117,14 @@ export const weddingEvents: WeddingEvent[] = [
     timeLocation: "Heritage Pavilions · 11:00 AM onwards",
   },
   {
+    name: "Mehendi",
+    date: "11 Dec",
+    year: "2025",
+    className: "mehendi",
+    note: "Auspicious fragrant henna, folk songs & vibrant celebration",
+    timeLocation: "The Riverside Courtyard · 1:00 PM onwards",
+  },
+  {
     name: "Engagement",
     date: "11 Dec",
     year: "2025",
@@ -125,12 +133,36 @@ export const weddingEvents: WeddingEvent[] = [
     timeLocation: "Poolside Lawns · 5:00 PM onwards",
   },
   {
+    name: "Sangeet",
+    date: "11 Dec",
+    year: "2025",
+    className: "sangeet",
+    note: "An evening of musical rhythms, joyous performances & dancing",
+    timeLocation: "The Royal Amphitheatre · 7:30 PM onwards",
+  },
+  {
+    name: "Haldi",
+    date: "12 Dec",
+    year: "2025",
+    className: "haldi",
+    note: "Golden turmeric blessings, fragrant rose petals & joyful laughter",
+    timeLocation: "Sunlit Poolside Lawns · 10:00 AM onwards",
+  },
+  {
     name: "Bhaat",
     date: "12 Dec",
     year: "2025",
     className: "bhaat",
     note: "Folk melodies & maternal family welcoming",
-    timeLocation: "Anand Bhavan Courtyard · 9:30 AM onwards",
+    timeLocation: "Anand Bhavan Courtyard · 11:30 AM onwards",
+  },
+  {
+    name: "Shaadi",
+    date: "12 Dec",
+    year: "2025",
+    className: "shaadi",
+    note: "The sacred royal wedding union, baraat & divine blessings",
+    timeLocation: "The Vedic Sangam Mandap · 5:30 PM onwards",
   },
   {
     name: "Varmala",
@@ -138,7 +170,7 @@ export const weddingEvents: WeddingEvent[] = [
     year: "2025",
     className: "varmala",
     note: "Exchange of sacred fragrant floral garlands",
-    timeLocation: "Sangam Ghat Mandap · 6:30 PM onwards",
+    timeLocation: "Sangam Ghat Mandap · 7:00 PM onwards",
   },
   {
     name: "Pheras",
@@ -146,7 +178,7 @@ export const weddingEvents: WeddingEvent[] = [
     year: "2025",
     className: "pheras",
     note: "Seven sacred vows around the holy fire",
-    timeLocation: "The Vedic Mandap · 8:00 PM onwards",
+    timeLocation: "The Vedic Mandap · 8:30 PM onwards",
   },
   {
     name: "Reception",

@@ -9,33 +9,39 @@ const GALLERY_LAYOUT = {
   // Gallery heading
   title: {
     fontSize: "58px",
-    y: "65px",
+    y: "135px",
   },
 
   // All images
   images: {
-    gap: "clamp(25px, 3vh, 35px)",
-    y: "-12px",
-    size: "90%",
+    gap: "clamp(20px, 2.5svh, 30px)",
+    y: "-6px",
+    size: "85%",
   },
 
   // Individual image position and size
-  image1: { y: "10px", size: "100%" },
-  image2: { y: "0px", size: "100%" },
-  image3: { y: "0px", size: "100%" },
-  image4: { y: "0px", size: "100%" },
+  image1: { x: "0px", y: "8px", size: "85%" },
+  image2: { x: "0px", y: "0px", size: "85%" },
+  image3: { x: "10px", y: "-22px", size: "85%" },
+  image4: { x: "-10px", y: "-22px", size: "85%" },
 };
 
 // ==========================================
 
 export function GallerySection() {
   const getImageStyle = (image: {
+    x?: string;
     y: string;
     size: string;
-  }) => ({
-    transform: `translateY(${image.y}) scale(${image.size === "100%" ? 1 : parseFloat(image.size) / 100}) rotate(var(--rotation, 0deg))`,
-    transformOrigin: "top center",
-  });
+  }) => {
+    const rawSize = image.size !== "100%" ? image.size : GALLERY_LAYOUT.images.size;
+    const scale = parseFloat(rawSize) / 100;
+    const x = image.x || "0px";
+    return {
+      transform: `translate(${x}, ${image.y}) scale(${scale}) rotate(var(--rotation, 0deg))`,
+      transformOrigin: "top center",
+    };
+  };
 
   return (
     <Section
@@ -102,7 +108,7 @@ export function GallerySection() {
               strokeWidth="1.2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg><br></br><br></br>
         </div>
 
         <h2
@@ -110,12 +116,12 @@ export function GallerySection() {
           style={{ fontSize: GALLERY_LAYOUT.title.fontSize }}
         >
           Gallery
-        </h2>
-
+        </h2><br></br>
+{/* 
         <p className="gallery-subtitle">
           FRAMES OF OUR HAPPIEST MOMENTS
-        </p>
-      </header>
+        </p> */}
+      </header><br></br>
 
       {/* Gallery Images */}
       <div

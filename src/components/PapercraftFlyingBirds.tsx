@@ -633,9 +633,13 @@ export function PapercraftFlyingBirds({
     const el = containerRef.current;
     if (!el) return;
 
+    let lastWidth = 0;
     const measureWidth = () => {
       const w = el.clientWidth || el.parentElement?.clientWidth || window.innerWidth;
-      el.style.setProperty("--track-width", `${w}px`);
+      if (w && w !== lastWidth) {
+        lastWidth = w;
+        el.style.setProperty("--track-width", `${w}px`);
+      }
     };
 
     measureWidth();

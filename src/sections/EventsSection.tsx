@@ -23,8 +23,13 @@ const eventCardImages: Record<string, string> = {
   Shagun: "/images/Evevnt-cards/Shagun-card.png",
   Cocktail: "/images/Evevnt-cards/Cocktail-card.png",
   Tilak: "/images/Evevnt-cards/Tilak-card.png",
+  Mehendi: "/images/Evevnt-cards/Mehandi-card.png",
+  Mehandi: "/images/Evevnt-cards/Mehandi-card.png",
   Engagement: "/images/Evevnt-cards/Engagement-card.png",
+  Sangeet: "/images/Evevnt-cards/Sangeet-card.png",
+  Haldi: "/images/Evevnt-cards/Haldi-card.png",
   Bhaat: "/images/Evevnt-cards/Bhaat-card.png",
+  Shaadi: "/images/Evevnt-cards/Shaadi-card.png",
   Varmala: "/images/Evevnt-cards/Varmala-card.png",
   Pheras: "/images/Evevnt-cards/Pheras-card.png",
   Reception: "/images/Evevnt-cards/Reception-card.png",
@@ -40,6 +45,7 @@ export function EventsSection({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [flippedEvent, setFlippedEvent] = useState<string | null>(null);
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const autoScrollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -50,6 +56,14 @@ export function EventsSection({
     } else {
       setInternalEvent(item);
     }
+  };
+
+  const handleCardClick = (item: WeddingEvent, index: number) => {
+    if (index !== currentIndex) {
+      scrollToIndex(index);
+    }
+    setFlippedEvent((prev) => (prev === item.name ? null : item.name));
+    setIsPaused(true);
   };
 
   // Scroll to a particular event card
@@ -73,6 +87,7 @@ export function EventsSection({
         });
 
         setCurrentIndex(index);
+        setFlippedEvent(null);
       }
     },
     [events.length]
@@ -82,6 +97,7 @@ export function EventsSection({
   const handleDotClick = (index: number) => {
     scrollToIndex(index);
     setIsPaused(true);
+    setFlippedEvent(null);
   };
 
   // Automatically update active event during manual or automatic scrolling
@@ -131,7 +147,7 @@ export function EventsSection({
 
   // Automatic horizontal scrolling
   useEffect(() => {
-    if (isPaused || events.length <= 1) return;
+    if (isPaused || events.length <= 1 || flippedEvent !== null) return;
 
     autoScrollRef.current = setInterval(() => {
       setCurrentIndex((previousIndex) => {
@@ -143,14 +159,14 @@ export function EventsSection({
         scrollToIndex(nextIndex);
         return nextIndex;
       });
-    }, 2000);
+    }, 7000);
 
     return () => {
       if (autoScrollRef.current) {
         clearInterval(autoScrollRef.current);
       }
     };
-  }, [isPaused, events.length, scrollToIndex]);
+  }, [isPaused, events.length, scrollToIndex, flippedEvent]);
 
   // Current active ceremony
   const activeCeremony =
@@ -165,10 +181,6 @@ export function EventsSection({
       >
         {/* Section Header */}
         <header className="event-header-title" data-reveal>
-          <p className="event-eyebrow">
-            Sacred Rituals & Celebrations
-          </p>
-
           <h2 className="event-main-title">
             Our Celebrations
           </h2>
@@ -235,47 +247,165 @@ export function EventsSection({
           >
             {events.map((item, index) => {
               const isActive = index === currentIndex;
+              const isFlipped = flippedEvent === item.name;
 
               return (
                 <div
                   key={item.name}
                   className={`event-scroll-item ${isActive ? "is-active" : ""
-                    }`}
+                    } ${isFlipped ? "is-card-flipped" : ""}`}
                 >
-                  <button
-                    type="button"
-                    className={`event-card-btn event-card-${item.className}`}
-                    onClick={() => handleSelect(item)}
-                    aria-label={`View ceremony details for ${item.name}`}
-                  >
-                    {/* Date Badge */}
-                    <div className="event-card-header-badge">
-                      <span className="badge-idx">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-
-                      <span className="badge-dt">
-                        {item.date}
-                      </span>
-                    </div>
-
-                    {/* Event Image */}
-                    <img
-                      src={
-                        eventCardImages[item.name] ||
-                        "/images/Evevnt-cards/Mayra-card.png"
+                  <div
+                    className={`event-card-flipper ${isFlipped ? "flipped" : ""
+                      }`}
+                    onClick={() => handleCardClick(item, index)}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isFlipped}
+                    aria-label={`${item.name} ceremony card. Tap to ${isFlipped ? "flip back" : "flip open for details"
+                      }`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleCardClick(item, index);
                       }
-                      alt={`${item.name} Event Card`}
-                      className="event-card-img"
-                      loading="eager"
-                      decoding="async"
-                    />
+                    }}
+                  >
+                    <div className="event-card-inner">
+                      {/* FRONT OF CARD */}
+                      <div className="event-card-front">
+                        {/* Date Badge */}
+                        <div className="event-card-header-badge">
+                          <span className="badge-idx">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
 
-                    {/* Tap Cue */}
-                    <div className="event-card-tap-cue">
-                      <span>Tap to view details</span>
+                          <span className="badge-dt">{item.date}</span>
+                        </div>
+
+                        {/* Event Image */}
+                        <img
+                          src={
+                            eventCardImages[item.name] ||
+                            "/images/Evevnt-cards/Mayra-card.png"
+                          }
+                          alt={`${item.name} Event Card`}
+                          className="event-card-img"
+                          loading="eager"
+                          decoding="async"
+                        />
+
+                        {/* Tap Cue */}
+                        <div className="event-card-tap-cue">
+                          <span>{isFlipped ? "Tap to close ↺" : "Tap to flip open ↻"}</span>
+                        </div>
+                      </div>
+
+                      {/* BACK OF CARD (FLIP OPEN VIEW) */}
+                      <div className="event-card-back">
+                        <div className="event-card-back-frame">
+                          <div className="back-top-emblem" aria-hidden="true">
+                            <svg
+                              width="30"
+                              height="20"
+                              viewBox="0 0 34 22"
+                              fill="none"
+                            >
+                              <path
+                                d="M17 1.5 C15 6 14.5 13 17 18 C19.5 13 19 6 17 1.5 Z"
+                                stroke="#9c6827"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                              />
+                              <path
+                                d="M17 18 C12 16 8 9 9.5 5 C11.5 8 14 13 17 18 Z"
+                                stroke="#9c6827"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                              />
+                              <path
+                                d="M17 18 C22 16 26 9 24.5 5 C22.5 8 20 13 17 18 Z"
+                                stroke="#9c6827"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                              />
+                              <path
+                                d="M7 19.5 C12 21 22 21 27 19.5"
+                                stroke="#9c6827"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                              />
+                            </svg>
+                          </div>
+
+                          <div className="back-badge">
+                            <span>
+                              {item.date} · {item.year || "2025"}
+                            </span>
+                          </div>
+
+                          <h3 className="back-ceremony-title">
+                            {item.name}
+                          </h3>
+
+                          <div className="back-divider" aria-hidden="true">
+                            <span className="back-divider-line" />
+                            <span className="back-divider-flower">✿</span>
+                            <span className="back-divider-line" />
+                          </div>
+
+                          <p className="back-note">{item.note}</p>
+
+                          <div className="back-time-location">
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#8f5c1d"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                              <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>
+                              {item.timeLocation ||
+                                "Sangam Courtyard · 5:00 PM onwards"}
+                            </span>
+                          </div>
+
+                          <div className="back-actions">
+                            <button
+                              type="button"
+                              className="back-btn back-btn-flip"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setFlippedEvent(null);
+                              }}
+                              aria-label="Flip card back"
+                            >
+                              <span>Flip back ↺</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              className="back-btn back-btn-modal"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSelect(item);
+                              }}
+                              aria-label="View more details in popup"
+                            >
+                              <span>Details ↗</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </button>
+                  </div>
                 </div>
               );
             })}
