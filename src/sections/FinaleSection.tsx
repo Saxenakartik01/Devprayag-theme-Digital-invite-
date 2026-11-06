@@ -138,7 +138,7 @@ export function FinaleSection({ onReturnToTop: _onReturnToTop }: FinaleSectionPr
           rel="noopener noreferrer"
           className="finale-credit-link"
         >
-          Created by ParitkaStudio
+          Designed by ParitkaStudio
         </a>
       </footer>
     </Section>
