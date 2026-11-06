@@ -85,6 +85,14 @@ export interface WeddingEvent {
 
 export const weddingEvents: WeddingEvent[] = [
   {
+    name: "Roka",
+    date: "09 Dec",
+    year: "2025",
+    className: "roka",
+    note: "Auspicious official commitment, blessings & shagun exchange",
+    timeLocation: "Heritage Grand Hall · 10:00 AM onwards",
+  },
+  {
     name: "Mayra",
     date: "10 Dec",
     year: "2025",
@@ -203,19 +211,69 @@ export interface TravelMode {
   detail: string;
 }
 
+export interface TravelItem {
+  label: string;
+  detail?: string;
+  url?: string;
+}
+
 export interface VenueDetails {
+  sectionTitle?: string;
+  headerTitle: string;
   name: string;
   city: string;
   mapPinLabel: string;
   mapUrl: string;
-  modes: TravelMode[];
+  travelItems: [
+    TravelItem,
+    TravelItem,
+    TravelItem,
+    TravelItem,
+    TravelItem,
+    TravelItem
+  ];
+  modes?: TravelMode[];
 }
 
 export const venueDetails: VenueDetails = {
+  sectionTitle: "Venue",
+  headerTitle: "Sangam Ghat",
   name: "Sangam Ghat",
   city: "Prayagraj, Uttar Pradesh",
-  mapPinLabel: "Sangam",
+  mapPinLabel: "Sangam Ghat",
   mapUrl: "https://maps.google.com/?q=Sangam+Ghat+Prayagraj",
+  travelItems: [
+    {
+      label: "Road",
+      detail:
+        "Well-connected via NH19. Local app cabs & pre-booked private taxis are readily available.",
+    },
+    {
+      label: "Air",
+      detail:
+        "Prayagraj Airport (IXD) is ~12 km away, with direct connecting flights from major cities.",
+    },
+    {
+      label: "Train",
+      detail:
+        "Prayagraj Junction (PRYJ) is ~6 km from the venue, with frequent express trains across India.",
+    },
+    {
+      label: "Boat Ghat",
+      detail:
+        "Auspicious ceremonial boat rides across the holy confluence of Ganga & Yamuna rivers.",
+    },
+    {
+      label: "Nearby Stay",
+      detail:
+        "Luxury heritage riverside camps, resorts, and premium hotels located within 5–15 minutes.",
+    },
+    {
+      label: "Travel Tips",
+      detail:
+        "Light shawl or warm evening wrap recommended for riverside breeze. Comfortable footwear advised.",
+    },
+  ],
   modes: [
     { type: "Car", detail: "Local taxis" },
     { type: "Flight", detail: "IXD airport" },

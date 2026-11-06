@@ -1965,26 +1965,216 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   padding: 0 16px;
 }
 
-.venue-card-link {
-  display: block;
+.venue-card-wrapper {
   position: relative;
-  width: clamp(270px, 80vw, 350px);
-  max-width: 92%;
+  width: 100%;
+  max-width: 100%;
   border-radius: 12px;
-  text-decoration: none;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
-  cursor: pointer;
+  container-type: inline-size;
+  user-select: none;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.venue-card-link:hover {
-  transform: translateY(-4px) scale(1.02);
+.venue-card-wrapper:hover {
+  transform: translateY(-3px);
 }
 
 .venue-card-img {
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+.venue-card-text-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.venue-card-top-title {
+  position: absolute;
+  top: 7.2%;
+  left: 15.8%;
+  max-width: 48%;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(12px, 4.4cqi, 22px);
+  font-weight: 600;
+  color: #0c2b20;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  line-height: 1.1;
+  z-index: 3;
+}
+
+.venue-card-top-title:hover {
+  color: #8f5c1d;
+  transform: scale(1.02);
+}
+
+.venue-card-map-area {
+  position: absolute;
+  top: 13.5%;
+  left: 6%;
+  width: 88%;
+  height: 36%;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.venue-card-map-label {
+  position: absolute;
+  top: 56%;
+  left: 49.3%;
+  transform: translateX(-50%);
+  width: 15%;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(7.5px, 2.5cqi, 12px);
+  font-weight: 600;
+  color: #5c4328;
+  text-align: center;
+  line-height: 1.15;
+  white-space: pre-wrap;
+  word-break: break-word;
+  pointer-events: none;
+}
+
+.venue-card-mid-title {
+  position: absolute;
+  top: 52.1%;
+  left: 16.5%;
+  max-width: 36%;
+  margin: 0;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(13px, 5.2cqi, 24px);
+  font-weight: 700;
+  color: #0a251b;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 6 Travel mode slots */
+.venue-travel-slot {
+  position: absolute;
+  width: 25%;
+  text-align: center;
+  cursor: pointer;
+  transform: translateX(-50%);
+  padding: 3px 4px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 3;
+}
+
+.venue-travel-slot:hover {
+  transform: translateX(-50%) translateY(-2px);
+  background: rgba(229, 195, 140, 0.25);
+}
+
+.venue-travel-slot-1 {
+  left: 24.2%;
+  top: 71.0%;
+}
+
+.venue-travel-slot-2 {
+  left: 51.2%;
+  top: 71.0%;
+}
+
+.venue-travel-slot-3 {
+  left: 79.3%;
+  top: 71.0%;
+}
+
+.venue-travel-slot-4 {
+  left: 24.2%;
+  top: 92.5%;
+}
+
+.venue-travel-slot-5 {
+  left: 51.2%;
+  top: 92.5%;
+}
+
+.venue-travel-slot-6 {
+  left: 79.3%;
+  top: 92.5%;
+}
+
+.venue-travel-label {
+  display: block;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: clamp(9px, 3.8cqi, 17px);
+  font-weight: 600;
+  color: #0a251b;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.venue-travel-modal-content {
+  text-align: center;
+  padding: 14px 10px;
+}
+
+.venue-modal-title {
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 22px;
+  color: #0d281e;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.venue-modal-detail {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3b2816;
+  margin: 12px 0 20px;
+}
+
+.venue-modal-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.venue-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #113628, #091f16);
+  color: #f7eedd;
+  padding: 10px 22px;
+  border-radius: 24px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(229, 195, 140, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.venue-modal-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #184836, #0d2a1f);
 }
 
 /* Bottom Matching Floral Garland & Border in Venue Section */

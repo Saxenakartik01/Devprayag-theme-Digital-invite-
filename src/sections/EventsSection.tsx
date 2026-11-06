@@ -19,12 +19,12 @@ export interface EventsSectionProps {
 }
 
 const eventCardImages: Record<string, string> = {
+  Roka: "/images/Evevnt-cards/Roka-card.png",
   Mayra: "/images/Evevnt-cards/Mayra-card.png",
   Shagun: "/images/Evevnt-cards/Shagun-card.png",
   Cocktail: "/images/Evevnt-cards/Cocktail-card.png",
   Tilak: "/images/Evevnt-cards/Tilak-card.png",
   Mehendi: "/images/Evevnt-cards/Mehandi-card.png",
-  Mehandi: "/images/Evevnt-cards/Mehandi-card.png",
   Engagement: "/images/Evevnt-cards/Engagement-card.png",
   Sangeet: "/images/Evevnt-cards/Sangeet-card.png",
   Haldi: "/images/Evevnt-cards/Haldi-card.png",
