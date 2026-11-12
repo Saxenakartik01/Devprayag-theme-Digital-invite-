@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Navigation } from "./components/Navigation";
 import { Modal } from "./components/Modal";
 import { MusicPlayer } from "./components/MusicPlayer";
 import { DateSection } from "./sections/DateSection";
@@ -13,7 +12,6 @@ import { FinaleSection } from "./sections/FinaleSection";
 import type { WeddingEvent } from "./data/wedding";
 
 export function App() {
-  const [active, setActive] = useState("home");
   const [selectedEvent, setSelectedEvent] = useState<WeddingEvent | null>(null);
   const [heroVideoEnded, setHeroVideoEnded] = useState(false);
 
@@ -26,17 +24,8 @@ export function App() {
       { threshold: 0.16 }
     );
 
-    const sections = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }),
-      { rootMargin: "-42% 0px -42%" }
-    );
-
     const observeAll = () => {
       document.querySelectorAll("[data-reveal]").forEach((el) => reveal.observe(el));
-      document.querySelectorAll(".scene").forEach((el) => sections.observe(el));
     };
 
     observeAll();
@@ -49,7 +38,6 @@ export function App() {
 
     return () => {
       reveal.disconnect();
-      sections.disconnect();
       mutation.disconnect();
     };
   }, []);
@@ -60,8 +48,6 @@ export function App() {
 
   return (
     <main className="invitation-shell">
-      <Navigation activeSection={active} onNavigate={scrollTo} />
-
       <DateSection
         onScrollCue={() => scrollTo("date")}
         onVideoEnd={() => setHeroVideoEnded(true)}

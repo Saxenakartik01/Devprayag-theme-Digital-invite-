@@ -318,7 +318,7 @@ export const finaleDetails = {
 
 export const weddingImages = {
   hero: "/images/backgrounds/hero-arch.jpg",
-  date: "/images/backgrounds/sangam.jpg",
+  date: "/images/backgrounds/Date-page.jpg",
   story: "/images/backgrounds/Story-page.png",
   couple: "/images/backgrounds/Couple-page.png",
   events: "/images/backgrounds/Event-page.png",

@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { HeroSection } from "./HeroSection";
 import { Section } from "../components/Section";
+import { DraggableDecor } from "../components/DraggableDecor";
 import { PapercraftFlyingBirds } from "../components/PapercraftFlyingBirds";
-import { coupleDetails, dateDetails } from "../data/wedding";
+import { coupleDetails, dateDetails, weddingImages } from "../data/wedding";
 
 // ==========================================
 // DATE TEXT POSITION - ADJUST HERE
@@ -45,20 +46,70 @@ export function DateSection({
   return (
     <div id="home" className="hero-date-stage">
       <div className="date-layer">
-        <Section id="date" className="date-scene">
-          <video
-            src="/images/backgrounds/Data-page.mp4"
-            className="date-video"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-          />
-
+        <Section id="date" image={weddingImages.date} className="date-scene">
           <div className="date-video-scrim" />
 
           <PapercraftFlyingBirds variant="date" />
+
+          <div className="date-clouds-layer" aria-label="Interactive floating clouds">
+            <DraggableDecor
+              className="date-cloud-wrap date-cloud-right"
+              ariaLabel="Move right papercraft cloud"
+              maxRadius={56}
+            >
+              <img
+                src="/images/decorations/final_cloud_right.png"
+                alt=""
+                className="cloud-img"
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </DraggableDecor>
+            <DraggableDecor
+              className="date-cloud-wrap date-cloud-left"
+              ariaLabel="Move left papercraft cloud"
+              maxRadius={56}
+            >
+              <img
+                src="/images/decorations/final_cloud.png"
+                alt=""
+                className="cloud-img"
+                loading="eager"
+                decoding="async"
+                draggable={false}
+              />
+            </DraggableDecor>
+          </div>
+
+          <div className="date-boats-layer" aria-label="Interactive river boats">
+            <DraggableDecor
+              className="date-boat-wrap date-boat-small"
+              ariaLabel="Move small river sailboat"
+              maxRadius={36}
+            >
+              <div className="boat-water-ripple" aria-hidden="true" />
+              <img
+                src="/images/decorations/final_boat_small.png"
+                alt="Small papercraft boat floating on river"
+                className="boat-img"
+                draggable={false}
+              />
+            </DraggableDecor>
+            <DraggableDecor
+              className="date-boat-wrap date-boat-primary"
+              ariaLabel="Move river sailboat"
+              maxRadius={36}
+            >
+              <div className="boat-water-ripple" aria-hidden="true" />
+              <img
+                src="/images/decorations/final_boat_center.png"
+                alt="Papercraft boat floating on river"
+                className="boat-img"
+                draggable={false}
+              />
+            </DraggableDecor>
+          </div>
 
           <div
             className="date-content"

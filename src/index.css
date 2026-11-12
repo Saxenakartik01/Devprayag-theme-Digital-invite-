@@ -640,11 +640,12 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   max-height: 100%;
 }
 
-/* Date Scene (Data Page) with Background Video */
+/* Date Scene (Date Page) with Background Image */
 .date-scene {
   position: relative;
-  background-image: none !important;
-  background-color: #000000;
+  background-color: #0e3b30;
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
 }
 
@@ -663,10 +664,10 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   inset: 0;
   z-index: 1;
   background: linear-gradient(180deg,
-      rgba(14, 10, 6, 0.35) 0%,
-      rgba(14, 10, 6, 0.08) 32%,
-      rgba(14, 10, 6, 0.14) 68%,
-      rgba(14, 10, 6, 0.45) 100%);
+      rgba(8, 28, 22, 0.25) 0%,
+      rgba(8, 28, 22, 0.04) 34%,
+      rgba(8, 28, 22, 0) 68%,
+      rgba(8, 28, 22, 0.14) 100%);
   pointer-events: none;
 }
 
@@ -676,7 +677,193 @@ body.video-scroll-locked .chapter-nav button:not(:first-child) {
   z-index: 10;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+}
+
+.date-content .light-title {
   pointer-events: auto;
+}
+
+.date-clouds-layer,
+.date-boats-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.date-clouds-layer {
+  z-index: 15;
+}
+
+.date-boats-layer {
+  z-index: 16;
+}
+
+.date-cloud-wrap {
+  position: absolute;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.date-cloud-left {
+  top: 1.5%;
+  left: -1.5%;
+  width: clamp(142px, 35vw, 210px);
+  opacity: 0.96;
+}
+
+.date-cloud-right {
+  top: 1.8%;
+  right: -1.5%;
+  width: clamp(136px, 33vw, 200px);
+  opacity: 0.98;
+}
+
+.date-cloud-wrap .cloud-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 4px 10px rgba(4, 18, 14, 0.28));
+}
+
+.date-cloud-right .draggable-decor-inner {
+  animation: dateCloudFloatRight 8.5s ease-in-out infinite;
+}
+
+.date-cloud-left .draggable-decor-inner {
+  animation: dateCloudFloatLeft 9.2s ease-in-out infinite;
+  animation-delay: -3.5s;
+}
+
+.date-boat-wrap {
+  position: absolute;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.date-boat-primary {
+  bottom: 11.5%;
+  left: 42%;
+  width: clamp(88px, 23vw, 118px);
+}
+
+.date-boat-small {
+  bottom: 20.5%;
+  left: 16%;
+  width: clamp(42px, 11vw, 56px);
+}
+
+.date-boat-wrap .boat-img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 5px 10px rgba(4, 24, 28, 0.28));
+}
+
+.date-boat-wrap .boat-water-ripple {
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 92%;
+  height: 14px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(220, 250, 248, 0.42) 0%,
+    rgba(130, 224, 220, 0.18) 55%,
+    rgba(130, 224, 220, 0) 75%
+  );
+  z-index: 1;
+  pointer-events: none;
+  animation: dateBoatRipple 4.2s ease-in-out infinite;
+}
+
+.date-boat-small .boat-water-ripple {
+  bottom: -2px;
+  height: 9px;
+  animation-delay: -1.8s;
+}
+
+.date-boat-primary .draggable-decor-inner {
+  animation: dateBoatFloatPrimary 7.5s ease-in-out infinite;
+}
+
+.date-boat-small .draggable-decor-inner {
+  animation: dateBoatFloatSmall 8.8s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+
+@keyframes dateCloudFloatRight {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  33.3% {
+    transform: translate3d(-11px, -5px, 0);
+  }
+  66.6% {
+    transform: translate3d(7px, -2px, 0);
+  }
+}
+
+@keyframes dateCloudFloatLeft {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  33.3% {
+    transform: translate3d(11px, -5px, 0);
+  }
+  66.6% {
+    transform: translate3d(-7px, -2px, 0);
+  }
+}
+
+@keyframes dateBoatFloatPrimary {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-0.8deg);
+  }
+  50% {
+    transform: translate3d(10px, -4px, 0) rotate(1.1deg);
+  }
+}
+
+@keyframes dateBoatFloatSmall {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0.9deg);
+  }
+  50% {
+    transform: translate3d(-8px, -3px, 0) rotate(-1deg);
+  }
+}
+
+@keyframes dateBoatRipple {
+  0%, 100% {
+    transform: translateX(-50%) scaleX(0.94);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(-50%) scaleX(1.08);
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .date-cloud-left .draggable-decor-inner,
+  .date-cloud-right .draggable-decor-inner,
+  .date-boat-primary .draggable-decor-inner,
+  .date-boat-small .draggable-decor-inner,
+  .date-boat-wrap .boat-water-ripple {
+    animation: none;
+  }
 }
 
 /* HeroSection sits in front, fading out smoothly when video ends */
